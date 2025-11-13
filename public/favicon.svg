@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <style>
+      .icon-circle {
+        filter: drop-shadow(0 4px 12px rgba(226, 78, 27, 0.3));
+      }
+      .icon-text {
+        font-family: Georgia, serif;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+      }
+      .accent-ring {
+        stroke-width: 8;
+        fill: none;
+      }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0B0B0C"/>
+
+  <!-- Main circle with shadow -->
+  <g class="icon-circle">
+    <!-- Outer gold accent ring -->
+    <circle cx="256" cy="256" r="220" class="accent-ring" stroke="#F2B705" opacity="0.6"/>
+
+    <!-- Main jollof orange circle -->
+    <circle cx="256" cy="256" r="210" fill="#E24E1B"/>
+
+    <!-- Inner subtle ring -->
+    <circle cx="256" cy="256" r="195" class="accent-ring" stroke="#FAF4E6" opacity="0.2"/>
+  </g>
+
+  <!-- Bold "I" text -->
+  <text x="256" y="310" font-size="220" font-weight="700" fill="#FAF4E6" text-anchor="middle" class="icon-text">I</text>
+
+  <!-- Top accent bar for visual interest -->
+  <rect x="190" y="85" width="132" height="12" rx="6" fill="#F2B705" opacity="0.8"/>
+
+  <!-- Bottom accent bar -->
+  <rect x="190" y="415" width="132" height="12" rx="6" fill="#F2B705" opacity="0.8"/>
+</svg>

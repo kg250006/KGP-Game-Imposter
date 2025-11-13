@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Animation Utilities */
+@layer utilities {
+  .animate-in {
+    animation-duration: 200ms;
+    animation-timing-function: ease-out;
+  }
+  .animate-out {
+    animation-duration: 150ms;
+    animation-timing-function: ease-in;
+  }
+  .fade-in {
+    animation: fadeIn 200ms ease-out;
+  }
+  .zoom-in-95 {
+    animation: zoomIn 200ms ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* CSS Custom Properties for Theme System */
+:root {
+  --bg: #0B0B0C;
+  --card: #121314;
+  --text: #FAF4E6;
+  --primary: #E24E1B;
+  --secondary: #F2B705;
+  --danger: #D91E36;
+  --success: #12A594;
+}
+
+/* Theme Variants */
+:root[data-theme="block-party"] {
+  --bg: #0E1111;
+  --card: #14213D;
+  --primary: #FF9E00;
+  --secondary: #FF3D9A;
+  --success: #B8E114;
+}
+
+:root[data-theme="earth-rhythm"] {
+  --bg: #211A16;
+  --card: #2A2218;
+  --primary: #C7683B;
+  --secondary: #D9A441;
+  --success: #6B7D43;
+}
+
+:root[data-theme="midnight-vibes"] {
+  --bg: #0A0D14;
+  --card: #141822;
+  --primary: #5B7FFF;
+  --secondary: #8B5CF6;
+  --success: #10B981;
+}
+
+:root[data-theme="sunset-glow"] {
+  --bg: #1A1212;
+  --card: #2D1F1F;
+  --primary: #FF6B35;
+  --secondary: #FFD23F;
+  --success: #06D6A0;
+}
+
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+#root {
+  min-height: 100vh;
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+
+  <!-- Homepage / Main Game Interface -->
+  <url>
+    <loc>https://theimpostergame.online/</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://theimpostergame.online/og-image.png</image:loc>
+      <image:title>The Imposter Game - Social Party Game</image:title>
+      <image:caption>Play The Imposter Game with friends - Ultimate social deduction party game</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Terms of Service -->
+  <url>
+    <loc>https://theimpostergame.online/terms.html</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://theimpostergame.online/privacy.html</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>

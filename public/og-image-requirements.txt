@@ -1,0 +1,31 @@
+SOCIAL MEDIA PREVIEW IMAGE REQUIREMENTS
+========================================
+
+File: og-image.png
+Location: /public/og-image.png
+Dimensions: 1200 x 630 pixels (Facebook/LinkedIn standard)
+Format: PNG
+
+Content Guidelines:
+- Game logo/title: "The Imposter Game"
+- Tagline: "Ultimate Social Party Game"
+- Visual elements showing game theme (group play, mystery, fun)
+- Brand colors:
+  - Primary: #E24E1B (orange)
+  - Background: #0B0B0C (dark)
+  - Text: #FFFFFF (white)
+- Ensure text is readable at smaller sizes
+- Keep important content in the center (safe zone)
+
+Alternative Sizes Recommended:
+- Twitter: 1200 x 600 (already covered by main image)
+- Instagram: 1080 x 1080 (square)
+
+Tools to Create:
+- Canva (canva.com)
+- Figma (figma.com)
+- Adobe Express (express.adobe.com)
+- Or use the game's screenshot feature
+
+Note: Until a custom image is created, the site will show a missing image
+placeholder. This should be created as a priority for optimal social sharing.
