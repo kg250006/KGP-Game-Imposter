@@ -16,7 +16,7 @@ export function Footer(): ReactElement {
   };
 
   return (
-    <footer className="w-full bg-ink border-t border-palm/20 mt-8">
+    <footer className="w-full bg-ink border-t border-palm/20">
       <div className="max-w-4xl mx-auto px-4 py-6">
         <p className="text-center text-xs text-cream/60">
           Designed/Operated by KG ProDesign |{' '}

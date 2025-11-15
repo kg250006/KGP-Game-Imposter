@@ -11,7 +11,6 @@ import { Card } from '@/shared/components/ui/Card';
 import { Confetti } from '@/shared/components/animations/Confetti';
 import { PremiumUpsellModal } from '../../premium/components/PremiumUpsellModal';
 import { PaymentModal } from '../../payment/components/PaymentModal';
-import { StatsExport } from '../../stats/components/StatsExport';
 import { cn } from '@/shared/utils';
 
 /**
@@ -69,132 +68,104 @@ export function ResultsScreen(): ReactElement {
   };
 
   return (
-    <div className="min-h-screen bg-hero-afro flex items-center justify-center p-4">
-      <div className="max-w-2xl w-full">
-        <Card variant="elevated">
-          {/* Imposter Reveal */}
-          <div className="text-center mb-6">
-            <h2 className="text-2xl md:text-3xl font-bold text-jollof mb-4">
-              Player {imposterPlayer ? imposterPlayer.playerNumber : '?'} Was the Imposter!
-            </h2>
-            <p className="text-ink/70 text-lg font-semibold">
-              The word was: <span className="font-bold text-jollof">{word}</span>
-            </p>
-          </div>
+    <div className="min-h-screen p-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Imposter Reveal */}
+        <Card variant="elevated" className="text-center mb-8 py-8 bg-gradient-to-r from-primary/10 to-secondary/10">
+          <p className="text-lg font-semibold text-textMuted uppercase mb-2">
+            {imposterPlayer?.name || `Player ${imposterPlayerNumber}`} was the
+          </p>
+          <h2 className="text-5xl md:text-6xl font-extrabold text-primary mb-4">
+            IMPOSTER!
+          </h2>
+          <p className="text-xl text-secondary">
+            The word was: <span className="font-bold">{word}</span>
+          </p>
+        </Card>
 
-          {/* Winner Announcement */}
-          <div className="text-center mb-8 py-6 bg-gradient-to-r from-jollof/10 to-gold/10 rounded-lg">
-            <h3 className="text-xl md:text-2xl font-bold mb-2">
-              {crewWon ? (
-                <span className="text-tealA">Crew Wins!</span>
-              ) : (
-                <span className="text-kente">Imposter Wins!</span>
-              )}
-            </h3>
-            <p className="text-ink/70 text-sm font-semibold">
-              {crewWon
-                ? 'The crew successfully identified the imposter!'
-                : 'The imposter blended in and survived!'}
-            </p>
-          </div>
+        {/* Winner Announcement */}
+        <Card variant="elevated" className="text-center mb-8 py-6">
+          <h3 className="text-3xl font-extrabold text-primary mb-2">
+            {crewWon ? '🎉 CREW WINS! 🎉' : '🕵️ IMPOSTER WINS! 🕵️'}
+          </h3>
+          <p className="text-lg text-textMuted">
+            {crewWon
+              ? 'Successfully identified!'
+              : 'Imposter evaded detection!'}
+          </p>
+        </Card>
 
-          {/* Scoreboard - Compact Grid View */}
-          <div className="mb-8" id="game-scoreboard">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-gold">Round Results</h3>
-              {isPremium && (
-                <StatsExport targetElementId="game-scoreboard" variant="secondary" />
-              )}
-            </div>
-            {imposterPlayerNumber !== undefined && (
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                {[...players]
-                  .sort((a, b) => a.playerNumber - b.playerNumber)
-                  .map((player) => {
-                    const isImposter = player.playerNumber === imposterPlayerNumber;
-                    const isTopScore = player.score === Math.max(...players.map(p => p.score)) && player.score > 0;
+        {/* Scoreboard */}
+        <Card variant="elevated" className="mb-8">
+          <h3 className="text-2xl font-bold text-primary mb-4 uppercase border-b border-primary/30 pb-4">
+            Scoreboard
+          </h3>
 
-                    return (
-                      <div
-                        key={player.id}
-                        className={cn(
-                          'bg-cream/5 border rounded-lg p-3 transition-all duration-200',
-                          isTopScore && 'border-gold bg-gold/10',
-                          isImposter && !isTopScore && 'border-jollof/30 bg-jollof/5',
-                          !isTopScore && !isImposter && 'border-palm/20'
-                        )}
-                      >
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-bold text-ink">
-                            P{player.playerNumber}
-                          </span>
-                          {isTopScore && (
-                            <span className="text-xs text-gold" title="Top scorer">
-                              ★
-                            </span>
-                          )}
-                        </div>
-                        <div className="text-center py-2">
-                          <div className="text-2xl font-bold text-gold mb-1">
-                            {player.score}
-                          </div>
-                          <div className="text-xs text-ink/60">
-                            {isImposter && (
-                              <span className="font-bold text-jollof">IMP</span>
-                            )}
-                            {!isImposter && <span>Crew</span>}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
-            )}
-          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            {[...players]
+              .sort((a, b) => b.score - a.score)
+              .map((player, index) => {
+                const isImposter = player.playerNumber === imposterPlayerNumber;
+                const isTopScore = index === 0;
 
-          {/* Premium Upsell (Free Tier Only) */}
-          {!isPremium && (
-            <div className="mb-6 p-3 bg-gold/10 border border-gold/30 rounded-lg">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex-1">
-                  <p className="text-ink/80 text-xs">
-                    <span className="font-bold">Enjoyed the game?</span> Unlock 6-10 players, exclusive categories, and more for just $2!
-                  </p>
-                </div>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => setShowUpsell(true)}
-                  className="text-xs whitespace-nowrap shrink-0"
-                >
-                  Unlock Premium
-                </Button>
-              </div>
-            </div>
-          )}
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={handleNextRound}
-              className="flex-1 text-lg"
-              aria-label="Play next round"
-            >
-              Next Round
-            </Button>
-            <Button
-              variant="danger"
-              size="lg"
-              onClick={handleEndGame}
-              className="flex-1 text-lg"
-              aria-label="End game"
-            >
-              End Game
-            </Button>
+                return (
+                  <div
+                    key={player.id}
+                    className={cn(
+                      'rounded-lg p-4 border transition-all duration-normal text-center',
+                      isTopScore && 'border-primary bg-primary/10',
+                      isImposter && !isTopScore && 'border-secondary/30 bg-secondary/5',
+                      !isTopScore && !isImposter && 'border-border/20 bg-background'
+                    )}
+                  >
+                    <p className="text-sm font-semibold text-textMuted mb-1">
+                      {player.name}
+                      {isTopScore && ' 👑'}
+                      {isImposter && ' 🕵️'}
+                    </p>
+                    <p className="text-3xl font-extrabold text-primary">
+                      {player.score}
+                    </p>
+                  </div>
+                );
+              })}
           </div>
         </Card>
+
+        {/* Premium Upsell (Free Tier Only) */}
+        {!isPremium && (
+          <Card variant="elevated" className="mb-8 p-6 border-primary/30">
+            <h4 className="text-xl font-bold text-primary mb-4">🌟 Premium Features</h4>
+            <p className="text-textMuted mb-4">
+              Unlock 10 players + premium categories
+            </p>
+            <Button
+              variant="primary"
+              onClick={() => setShowUpsell(true)}
+              className="w-full"
+            >
+              Unlock Premium - $2.99
+            </Button>
+          </Card>
+        )}
+
+        {/* Action Buttons */}
+        <div className="flex gap-4">
+          <Button
+            variant="primary"
+            onClick={handleNextRound}
+            className="flex-1"
+          >
+            Next Round
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={handleEndGame}
+            className="flex-1"
+          >
+            End Game
+          </Button>
+        </div>
       </div>
 
       {/* Confetti */}

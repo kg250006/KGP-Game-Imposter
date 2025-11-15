@@ -5,10 +5,11 @@
 
 import { ReactElement, useState } from 'react';
 import { FeatureGate } from '@/shared/components/ui/FeatureGate';
-import { FeatureLockedBadge } from '../../premium/components/FeatureLockedBadge';
 import { CATEGORIES, CategoryMeta } from '../../words/hooks/useWords';
 import { createCategoryId, CategoryId } from '../../game/types/game.types';
-import { cn } from '@/shared/utils';
+import { cn, trackCategorySelected } from '@/shared/utils';
+import { usePremium } from '../../premium/hooks/usePremium';
+import { Button } from '@/shared/components/ui/Button';
 
 /**
  * Props for CategorySelector component
@@ -49,41 +50,73 @@ export function CategorySelector({
   className,
   hideTitle = false,
 }: CategorySelectorProps): ReactElement {
+  const { isPremium = false } = usePremium();
   const [showAll, setShowAll] = useState(false);
 
-  // Show 8 categories initially (2 rows of 4 on desktop)
-  const displayedCategories = showAll ? CATEGORIES : CATEGORIES.slice(0, 8);
-  const hasMore = CATEGORIES.length > 8;
+  // Responsive limits: 4 on mobile, 6 on desktop
+  const MOBILE_LIMIT = 4;
+  const DESKTOP_LIMIT = 6;
+  const totalCategories = CATEGORIES.length;
+
+  // Determine displayed categories based on expansion state
+  const displayedCategories = showAll ? CATEGORIES : CATEGORIES;
 
   const renderCategoryCard = (category: CategoryMeta) => {
     const isSelected = category.id === selectedCategory;
 
     const card = (
       <div
-        onClick={() => onSelect(createCategoryId(category.id))}
+        onClick={() => {
+          onSelect(createCategoryId(category.id));
+          trackCategorySelected({
+            categoryId: category.id,
+            categoryName: category.name,
+            categoryTier: category.premium ? 'premium' : 'free',
+            isPremiumUser: isPremium,
+          });
+        }}
         className={cn(
-          'text-center cursor-pointer transition-all duration-200',
-          'hover:scale-105 hover:shadow-lg active:scale-95',
-          'min-h-[70px] rounded-lg p-3 flex items-center justify-center',
-          'shadow-md',
-          isSelected
-            ? 'border-2 border-jollof bg-gradient-to-br from-jollof/20 via-gold/15 to-jollof/10 shadow-glowGold'
-            : 'border border-palm/30 bg-gradient-to-br from-cream via-cream/98 to-cream/95',
-          category.premium && !isSelected && 'opacity-60 hover:opacity-70'
+          'text-center cursor-pointer transition-all duration-normal',
+          'hover:scale-102 hover:shadow-lg active:scale-98',
+          'h-[110px] rounded-md p-3 flex flex-col items-center justify-center gap-2',
+          'shadow-md relative overflow-hidden',
+          // Navy blue background for all cards
+          !isSelected && 'bg-navyDark',
+          // Selected state with lime accent
+          isSelected && 'border border-primary bg-gradient-to-br from-primary/20 via-navyDark/80 to-navyDark shadow-glowLime',
+          // Free cards slight opacity when not selected
+          !category.premium && !isSelected && 'opacity-70 hover:opacity-85',
+          // Premium cards slight opacity when locked
+          category.premium && !isSelected && 'opacity-80 hover:opacity-90'
         )}
         aria-label={`Select ${category.name} category`}
         role="button"
         tabIndex={0}
       >
-        <div className="flex flex-col items-center gap-1">
-          <span className={cn(
-            'font-bold text-sm',
-            isSelected ? 'text-jollof drop-shadow-sm' : 'text-ink'
-          )}>
-            {category.name}
+        {/* Icon */}
+        <span className="text-3xl">{category.icon}</span>
+
+        {/* Category Name */}
+        <span className={cn(
+          'font-bold text-sm',
+          isSelected ? 'text-primary drop-shadow-sm' : 'text-textColor'
+        )}>
+          {category.name}
+        </span>
+
+        {/* Age Range */}
+        {category.ageRange && (
+          <span className="text-xs text-textColor/60">
+            {category.ageRange === 'all' ? 'All Ages' : `Ages ${category.ageRange}`}
           </span>
-          {category.premium && <FeatureLockedBadge featureName="Premium" size="sm" />}
-        </div>
+        )}
+
+        {/* Premium Lock Icon - Positioned absolutely in top-right corner */}
+        {category.premium && (
+          <span className="absolute top-2 right-2 text-lg">
+            🔒
+          </span>
+        )}
       </div>
     );
 
@@ -104,19 +137,56 @@ export function CategorySelector({
       {!hideTitle && (
         <h3 className="text-sm font-bold text-gold mb-3 tracking-wide">Choose Category</h3>
       )}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3">
-        {displayedCategories.map(category => renderCategoryCard(category))}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
+        {displayedCategories
+          .slice(0, showAll ? undefined : MOBILE_LIMIT)
+          .map(category => renderCategoryCard(category))}
+        {/* Desktop: show up to DESKTOP_LIMIT when collapsed */}
+        <div className="hidden md:contents">
+          {!showAll && displayedCategories
+            .slice(MOBILE_LIMIT, DESKTOP_LIMIT)
+            .map(category => renderCategoryCard(category))}
+        </div>
       </div>
 
-      {/* Show More / Show Less Toggle */}
-      {hasMore && (
-        <div className="text-center pt-2">
-          <button
-            onClick={() => setShowAll(!showAll)}
-            className="text-sm font-semibold text-gold hover:text-jollof transition-colors underline"
+      {/* Show More button - mobile: show if > 4, desktop: show if > 6 */}
+      {!showAll && (
+        <>
+          {totalCategories > MOBILE_LIMIT && (
+            <div className="text-center mt-3 md:hidden">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setShowAll(true)}
+              >
+                Show More ({totalCategories - MOBILE_LIMIT} more)
+              </Button>
+            </div>
+          )}
+          {totalCategories > DESKTOP_LIMIT && (
+            <div className="text-center mt-3 hidden md:block">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setShowAll(true)}
+              >
+                Show More ({totalCategories - DESKTOP_LIMIT} more)
+              </Button>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Show Less button when expanded */}
+      {showAll && (totalCategories > MOBILE_LIMIT || totalCategories > DESKTOP_LIMIT) && (
+        <div className="text-center mt-3">
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => setShowAll(false)}
           >
-            {showAll ? 'Show Less' : 'Show More'}
-          </button>
+            Show Less
+          </Button>
         </div>
       )}
     </div>

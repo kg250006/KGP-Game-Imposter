@@ -20,3 +20,14 @@ export {
   type RoundWinner,
 } from './scoring';
 export { obfuscateToken, deobfuscateToken, simpleHash } from './obfuscation';
+export {
+  isAnalyticsAvailable,
+  getAnalyticsId,
+  trackPageView,
+  trackEvent,
+  analytics,
+  trackCategorySelected,
+  trackImposterHintsToggled,
+  trackPlayerCountChanged,
+  trackRoundCompleted,
+} from './analytics';

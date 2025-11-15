@@ -460,10 +460,10 @@ describe('LobbyScreen - Payment Flow', () => {
   });
 
   describe('UI elements', () => {
-    it('renders New Game title', () => {
+    it('renders New Round title', () => {
       render(<LobbyScreen />);
 
-      expect(screen.getByRole('heading', { name: /new game/i })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /new round/i })).toBeInTheDocument();
     });
 
     it('renders player count selector', () => {

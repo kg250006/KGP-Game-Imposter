@@ -32,7 +32,7 @@ import { cn } from '@/shared/utils';
  * ```
  */
 export function RevealScreen(): ReactElement {
-  const { players, currentRound, startDiscussion } = useGame();
+  const { players, currentRound, startDiscussion, settings } = useGame();
   const { currentPlayerNumber, isComplete, nextPlayer, totalPlayers } = useRevealSequence();
 
   const [isRevealed, setIsRevealed] = useState(false);
@@ -42,6 +42,8 @@ export function RevealScreen(): ReactElement {
   const currentPlayer = players.find(p => p.playerNumber === currentPlayerNumber);
   const isImposter = currentPlayer?.isImposter || false;
   const word = currentRound?.word.word || '';
+  const hint = currentRound?.word.hint;
+  const showHint = isImposter && settings.imposterHintsEnabled && hint;
 
   // Auto-transition when complete
   useEffect(() => {
@@ -67,12 +69,12 @@ export function RevealScreen(): ReactElement {
 
   if (isComplete) {
     return (
-      <div className="min-h-screen bg-hero-afro flex items-center justify-center p-4">
-        <Card variant="elevated" className="text-center max-w-md">
-          <h2 className="text-2xl font-bold text-jollof mb-4">
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <Card variant="elevated" className="text-center max-w-md bg-surface">
+          <h2 className="text-2xl font-extrabold text-primary mb-4 uppercase">
             All Words Revealed!
           </h2>
-          <p className="text-ink/70 font-semibold">
+          <p className="text-textMuted font-semibold">
             Starting discussion phase...
           </p>
         </Card>
@@ -81,29 +83,29 @@ export function RevealScreen(): ReactElement {
   }
 
   return (
-    <div className="min-h-screen bg-hero-afro flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="max-w-lg w-full">
         {/* Progress */}
         <div className="text-center mb-6">
-          <p className="text-cream/70 text-sm">
+          <p className="text-textMuted text-sm font-semibold uppercase">
             Progress: {currentPlayerNumber} / {totalPlayers}
           </p>
-          <div className="mt-2 h-2 bg-cream/20 rounded-full overflow-hidden">
+          <div className="mt-2 h-2 bg-background rounded-full overflow-hidden">
             <div
-              className="h-full bg-gold transition-all duration-300"
+              className="h-full bg-primary transition-all duration-normal"
               style={{ width: `${(currentPlayerNumber / totalPlayers) * 100}%` }}
             />
           </div>
         </div>
 
-        <Card variant="elevated" className="text-center">
+        <Card variant="elevated" className="text-center bg-surface min-h-[400px]">
           {!isRevealed ? (
             <>
               {/* Pre-reveal state */}
-              <h2 className="text-2xl md:text-3xl font-bold text-jollof mb-6">
-                Player {currentPlayerNumber}
+              <h2 className="text-2xl md:text-3xl font-extrabold text-primary mb-6 uppercase">
+                {currentPlayer?.name || `Player ${currentPlayerNumber}`}
               </h2>
-              <p className="text-ink/70 mb-8 text-lg font-bold">
+              <p className="text-textColor mb-8 text-lg font-bold">
                 Tap to Reveal Your Word
               </p>
               <Button
@@ -121,19 +123,32 @@ export function RevealScreen(): ReactElement {
               {/* Revealed state */}
               {showWord ? (
                 <>
-                  <h3 className="text-sm text-gold mb-4 font-semibold uppercase tracking-wide">
-                    Your Word:
+                  <h3 className="text-sm text-textColor mb-4 font-semibold uppercase tracking-wide">
+                    {isImposter ? 'You Are:' : 'Your Word:'}
                   </h3>
                   <div
                     className={cn(
-                      'text-5xl md:text-6xl font-bold mb-8 py-8 px-4 rounded-lg',
+                      'text-5xl md:text-6xl font-extrabold mb-4 py-8 px-4 rounded-lg',
                       isImposter
-                        ? 'text-kente bg-kente/10 border-2 border-kente'
-                        : 'text-jollof bg-jollof/10 border-2 border-jollof'
+                        ? 'text-secondary bg-secondary/10 border border-secondary/30'
+                        : 'text-primary bg-primary/10 border border-primary/30'
                     )}
                   >
-                    {isImposter ? 'IMPOSTER' : word}
+                    {isImposter ? '🕵️ IMPOSTER' : word}
                   </div>
+
+                  {/* Hint display for imposter */}
+                  {showHint && (
+                    <div className="mb-6 px-4 py-3 bg-secondary/5 border border-secondary/20 rounded-lg">
+                      <p className="text-xs text-secondary/60 uppercase tracking-wide mb-1">
+                        Hint
+                      </p>
+                      <p className="text-sm text-secondary font-medium">
+                        {hint}
+                      </p>
+                    </div>
+                  )}
+
                   <Button
                     variant="secondary"
                     size="lg"
@@ -147,10 +162,14 @@ export function RevealScreen(): ReactElement {
               ) : (
                 <>
                   {/* Post-reveal instructions */}
-                  <h3 className="text-xl font-bold text-jollof mb-4">
-                    Pass to Player {currentPlayerNumber + 1 <= totalPlayers ? currentPlayerNumber + 1 : 'Next'}
+                  <h3 className="text-xl font-bold text-primary mb-4">
+                    Pass to {
+                      currentPlayerNumber + 1 <= totalPlayers
+                        ? (players.find(p => p.playerNumber === currentPlayerNumber + 1)?.name || `Player ${currentPlayerNumber + 1}`)
+                        : 'Next Player'
+                    }
                   </h3>
-                  <p className="text-ink/70 text-sm">
+                  <p className="text-textMuted text-sm">
                     Make sure they can't see your screen!
                   </p>
                 </>
@@ -161,7 +180,7 @@ export function RevealScreen(): ReactElement {
 
         {/* Instructions */}
         <div className="mt-6 text-center">
-          <p className="text-cream/60 text-xs">
+          <p className="text-textMuted text-xs">
             Keep your word secret! Don't let others see your screen.
           </p>
         </div>

@@ -1,160 +1,239 @@
-# PRP (Product Requirement Prompt) System v3.0
+# 🕵️ The Imposter Game
 
-## Overview
+A mobile-first social party game where players find the imposter. Perfect for game nights, parties, and gatherings.
 
-PRP v3.0 combines the best features from v1.0 and v2.0 to create a comprehensive agentic development system that leverages Claude Code's capabilities for rapid, intelligent software development.
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
 
-## Key Features
+## 🎮 How It Works
 
-### 🤖 Enhanced Sub-Agent Architecture
-- **5 Specialized Agents** for different development tasks
-  - `meta-agent`: Creates new custom agents on demand
-  - `code-reviewer`: Comprehensive code review and analysis
-  - `ui-ux-agent`: UI/UX focused development assistance
-  - `prd-generator`: Product requirement document generation
-  - `slides-agent`: Technical presentation creation
+1. **Setup** - Choose 2-10 players and pick a word category
+2. **Reveal** - Each player taps to see their word (one gets "IMPOSTER")
+3. **Discuss** - Players describe the word without saying it
+4. **Vote** - Guess who the imposter is
+5. **Results** - See if you caught the imposter!
 
-### 📋 Streamlined Command System
-- **Core Commands**: Essential development workflows
-- **PRP Commands**: Simplified creation and execution
-- **Code Quality**: Review, debug, and RCA capabilities
-- **Git Operations**: Advanced worktree and conflict resolution
-- **TypeScript**: Specialized TypeScript development commands
-- **Experimental**: Parallel processing and rapid development
+## ✨ Features
 
-### 📚 Comprehensive Documentation
-- **Agent Wiki**: Best practices and architecture guides
-- **AI Documentation**: Claude Code mastery resources
-- **PRP Templates**: Structured templates for different use cases
+### Free Tier
+- 2-5 players
+- 6 word categories (Animals, Food, Places, Random, Technology, Travel)
+- Pass-the-phone gameplay
+- Score tracking
+- PWA support (install on home screen)
 
-### 🚀 Enhanced Infrastructure
-- **PRP Runner Script**: Python-based execution system
-- **Settings Management**: Formal configuration with schema validation
-- **Security Model**: Permission-based allowlist system
+### Premium ($2 for 24 hours)
+- 6-10 players
+- 10 additional word categories (Black Culture, Hip Hop, Kid Topics, Trending, and more)
+- Custom themes
+- Advanced statistics
 
-## Directory Structure
+## 🚀 Quick Start
 
-```
-_PRPs-agentic-dev3.0/
-├── .claude/
-│   ├── agents/                    # Specialized sub-agents
-│   ├── commands/
-│   │   ├── code-quality/         # Code review and debugging
-│   │   ├── core/                 # Essential commands
-│   │   ├── dev/                  # Development workflows
-│   │   ├── experimental/         # Advanced/experimental features
-│   │   ├── git/                  # Git operations
-│   │   ├── prp-commands/         # PRP creation/execution
-│   │   └── typescript/           # TypeScript specific
-│   └── settings.local.json       # Configuration
-├── agent_wiki/                   # Knowledge base
-│   └── best_practices/          # Claude Code best practices
-├── PRPs/
-│   ├── ai_docs/                 # AI development documentation
-│   ├── scripts/                 # PRP runner and utilities
-│   └── templates/               # PRP templates
-├── CLAUDE.md                    # Project-specific guidance
-└── README.md                    # This file
-```
+### Prerequisites
+- Node.js 18.x or higher
+- npm or yarn
 
-## Quick Start
+### Installation
 
-### 1. Create a PRP
 ```bash
-/prp-create
+# Clone the repository
+git clone https://github.com/yourusername/KGP-Game-Imposter.git
+cd KGP-Game-Imposter
+
+# Install dependencies
+npm install
+
+# Copy environment template
+cp .env.example .env
+
+# Start development server
+npm run dev
 ```
 
-### 2. Execute a PRP
+Visit `http://localhost:5173` to play!
+
+## 📦 Available Scripts
+
 ```bash
-/prp-execute
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm test             # Run tests
+npm run test:coverage # Run tests with coverage
+npm run type-check   # Check TypeScript types
+npm run lint         # Lint code
+npm run format       # Format code with Prettier
 ```
 
-### 3. Use Specialized Agents
+## 🏗️ Tech Stack
+
+- **Framework**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **State Management**: Zustand
+- **Testing**: Vitest + Testing Library
+- **Deployment**: Netlify (Static PWA)
+- **Payments**: Stripe, PayPal, Apple Pay
+
+## 📁 Project Structure
+
+```
+src/
+├── features/          # Feature modules (game, premium, payment, etc.)
+├── shared/            # Shared components and utilities
+├── config/            # Configuration files
+└── test/              # Test setup
+
+public/
+└── words/             # Word category JSON files
+```
+
+## 🎨 Theme
+
+The game uses a custom **Neo-Afro Modern** color palette:
+- **Ink** (#0B0B0C) - Background
+- **Jollof** (#E24E1B) - Primary actions
+- **Gold** (#F2B705) - Accents
+- **Cream** (#FAF4E6) - Text
+- **Palm** (#0F3D2E) - Borders
+- **Kente** (#D91E36) - Alerts
+
+## 🧪 Testing
+
 ```bash
-/code-reviewer  # For code review
-/ui-ux-agent    # For UI/UX tasks
+# Run all tests
+npm test
+
+# Run tests in watch mode
+npm test -- --watch
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run specific test file
+npm test -- src/features/game/components/LobbyScreen.test.tsx
 ```
 
-## What's New in v3.0
+Target coverage: 80%+ (lines, functions, branches, statements)
 
-### From v1.0
-- Retained comprehensive AI documentation
-- Kept experimental rapid development commands
-- Preserved PRP runner script infrastructure
-- Maintained TypeScript-specific commands
+## 🚢 Deployment
 
-### From v2.0
-- Integrated sub-agent architecture
-- Adopted simplified command structure
-- Included agent wiki knowledge base
-- Applied security configuration model
+### Deploy to Netlify
 
-### New in v3.0
-- Unified command system with best of both versions
-- Enhanced PRP templates with validation improvements
-- Consolidated documentation structure
-- Hybrid execution model (agents + scripts)
+1. Build the project:
+   ```bash
+   npm run build
+   ```
 
-## Best Practices
+2. Configure environment variables in Netlify dashboard (see `.env.example`)
 
-1. **Use Agents for Complex Tasks**: Leverage specialized agents for domain-specific work
-2. **Follow CLAUDE.md Guidelines**: Project-specific rules are defined there
-3. **Utilize Templates**: Start with templates for consistent PRP structure
-4. **Experiment Safely**: Use experimental commands in isolated environments
+3. Set build settings:
+   - Build command: `npm run build`
+   - Publish directory: `dist`
+   - Node version: 18.x
 
-## Command Categories
+4. Deploy!
 
-### Core Development
-- `/context-prime` - Initialize development context
-- `/smart-commit` - Intelligent git commits
-- `/create-pr` - Automated pull request creation
-- `/onboarding` - Project onboarding assistance
+See [DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md) for detailed deployment guide.
 
-### Code Quality
-- `/review-general` - General code review
-- `/review-uncommitted` - Review uncommitted changes
-- `/debug-RCA` - Root cause analysis for bugs
+## 🎯 Word Categories
 
-### PRP Management
-- `/prp-create` - Create new PRPs
-- `/prp-execute` - Execute existing PRPs
+### Free Categories (6)
+- Animals - Common animals
+- Food - Food and drinks
+- Places - Locations and landmarks
+- Random - Miscellaneous words
+- Technology - Tech terms
+- Travel - Travel and vacation
 
-### Git Operations
-- `/conflict-resolver` - Resolve merge conflicts
-- `/create-worktrees` - Setup git worktrees
+### Premium Categories (10)
+- Black Card - Black culture references
+- Grown Folks - Adult topics
+- Hip Hop Culture - Hip hop and rap
+- Inside Jokes - Relatable scenarios
+- Kid Topics - Family-friendly topics
+- Premium Culture - Premium cultural references
+- Slang - Modern slang terms
+- Trending Topics - What's trending now
+- TV & Movies - Entertainment
+- Wild Card - Challenging words
 
-### TypeScript
-- `/ts-module-analyzer` - Analyze TypeScript modules
-- `/ts-quick-interface` - Generate interfaces
-- `/ts-refactor-extract` - Extract and refactor code
-- `/ts-test-generator` - Generate tests
+## 📝 Environment Variables
 
-### Experimental
-- Parallel PRP creation commands
-- Rapid validation tools
-- Hackathon-optimized workflows
+Create a `.env` file (use `.env.example` as template):
 
-## Configuration
+```bash
+# Feature Flags
+VITE_FEATURE_PREMIUM_ENABLED=true
+VITE_FEATURE_ADS_ENABLED=false
+VITE_OPERATOR_MODE=hybrid
 
-Edit `.claude/settings.local.json` to configure:
-- Tool permissions
-- Command allowlists
-- Custom settings
+# Payment
+VITE_STRIPE_PAYMENT_LINK=your-stripe-link
+VITE_PAYPAL_CLIENT_ID=your-paypal-client-id
 
-## Contributing
+# Tier Limits
+VITE_FREE_MAX_PLAYERS=5
+VITE_PREMIUM_DURATION_HOURS=24
+```
 
-This is an evolving system. Key areas for contribution:
-- New specialized agents
-- Enhanced PRP templates
-- Additional experimental commands
-- Documentation improvements
+See [ENV_CONFIG_GUIDE.md](./ENV_CONFIG_GUIDE.md) for full configuration details.
 
-## Version History
+## 🤝 Contributing
 
-- **v1.0**: Command-focused system with comprehensive research
-- **v2.0**: Agent-based architecture with simplified workflows
-- **v3.0**: Unified system combining best of both approaches
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes with tests
+4. Run tests and linting (`npm run type-check && npm run lint && npm test`)
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+See [CLAUDE.md](./CLAUDE.md) for detailed development guidelines.
+
+## 📄 License
+
+This project is private and proprietary.
+
+## 🙏 Acknowledgments
+
+- Built with [React](https://react.dev)
+- Styled with [Tailwind CSS](https://tailwindcss.com)
+- Powered by [Vite](https://vitejs.dev)
+- Game inspired by social deduction classics
+
+## 📚 Documentation
+
+- [CLAUDE.md](./CLAUDE.md) - Development guidelines for Claude Code
+- [GAME_FLOW.md](./GAME_FLOW.md) - Visual game flow diagram
+- [DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md) - Deployment guide
+- [PRD-ImposterGame.md](./PRD-ImposterGame.md) - Product requirements
+
+## 🎮 Current Status
+
+**Version**: 1.0.0
+**Status**: Production Ready ✅
+
+### Recent Updates
+- ✅ Complete game flow (6 phases)
+- ✅ Premium tier system with payments
+- ✅ 16 word categories (6 free, 10 premium)
+- ✅ PWA with offline support
+- ✅ Mobile-optimized UI
+- ✅ Theme system
+- ✅ Statistics and export
+- ✅ AdSense integration
+- ✅ Feature flag system
+
+### Next Steps
+- [ ] Multi-device sync (future phase)
+- [ ] Custom word pack creator
+- [ ] Additional mini-games
+- [ ] Achievement system
 
 ---
 
-Built for rapid, intelligent development with Claude Code.
+**Made with ❤️ for game nights everywhere** | [Report Bug](https://github.com/yourusername/KGP-Game-Imposter/issues) | [Request Feature](https://github.com/yourusername/KGP-Game-Imposter/issues)

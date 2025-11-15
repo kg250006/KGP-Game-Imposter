@@ -3,6 +3,8 @@
  * @module themes/constants
  */
 
+import { huemintTheme } from './huemint-theme';
+
 /**
  * Theme color configuration
  */
@@ -40,9 +42,10 @@ export interface Theme {
  * First theme is free, others require premium
  */
 export const themes: Theme[] = [
+  huemintTheme, // HUEMINT Modern theme (free)
   {
     id: 'neo-afro',
-    name: 'Neo-Afro Modern',
+    name: 'Neo-Afro Modern (Classic)',
     premium: false,
     colors: {
       bg: '#1a1a2e',
@@ -136,3 +139,12 @@ export function getFreeThemes(): Theme[] {
 export function getPremiumThemes(): Theme[] {
   return themes.filter((theme) => theme.premium);
 }
+
+/**
+ * Default theme ID based on feature flag
+ * If VITE_NEW_THEME_ENABLED=true, use HUEMINT theme
+ * Otherwise, use Neo-Afro Modern (classic) theme
+ */
+export const DEFAULT_THEME_ID = import.meta.env.VITE_NEW_THEME_ENABLED === 'true'
+  ? 'huemint'
+  : 'neo-afro';

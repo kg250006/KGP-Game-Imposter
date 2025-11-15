@@ -18,12 +18,16 @@ export const useTheme = () => {
   const currentTheme = getThemeById(activeThemeId);
 
   /**
-   * Apply theme CSS variables to document root
+   * Apply theme CSS variables and data-theme attribute to document root
    */
   useEffect(() => {
     const root = document.documentElement;
     const { colors } = currentTheme;
 
+    // Apply data-theme attribute for CSS variable switching
+    root.setAttribute('data-theme', currentTheme.id);
+
+    // Fallback: Apply inline styles for older browsers
     root.style.setProperty('--color-bg', colors.bg);
     root.style.setProperty('--color-card', colors.card);
     root.style.setProperty('--color-primary', colors.primary);

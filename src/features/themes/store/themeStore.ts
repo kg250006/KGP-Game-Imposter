@@ -6,7 +6,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { ThemeState, ThemeActions } from '../types/theme.types';
-import { getThemeById } from '../constants/themes';
+import { getThemeById, DEFAULT_THEME_ID } from '../constants/themes';
 
 /**
  * Complete theme store type
@@ -20,8 +20,8 @@ type ThemeStore = ThemeState & ThemeActions;
 export const useThemeStore = create<ThemeStore>()(
   persist(
     (set) => ({
-      // Initial state - default to first (free) theme
-      activeThemeId: 'neo-afro',
+      // Initial state - uses DEFAULT_THEME_ID based on VITE_NEW_THEME_ENABLED flag
+      activeThemeId: DEFAULT_THEME_ID,
 
       // Actions
       setTheme: (themeId: string): boolean => {
@@ -37,7 +37,7 @@ export const useThemeStore = create<ThemeStore>()(
       },
 
       resetTheme: () => {
-        set({ activeThemeId: 'neo-afro' });
+        set({ activeThemeId: DEFAULT_THEME_ID });
       },
     }),
     {

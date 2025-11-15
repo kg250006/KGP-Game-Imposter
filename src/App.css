@@ -1,88 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import './styles/huemint-tokens.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Animation Utilities */
+/* TASK 6.1: Animation utilities and typography base styles */
 @layer utilities {
+  /* Animation helpers */
   .animate-in {
-    animation-duration: 200ms;
+    animation-duration: var(--duration-normal);
     animation-timing-function: ease-out;
+    animation-fill-mode: both;
   }
+
   .animate-out {
-    animation-duration: 150ms;
+    animation-duration: var(--duration-fast);
     animation-timing-function: ease-in;
+    animation-fill-mode: both;
   }
+
   .fade-in {
-    animation: fadeIn 200ms ease-out;
+    animation-name: fadeIn;
   }
+
   .zoom-in-95 {
-    animation: zoomIn 200ms ease-out;
+    animation-name: zoomIn95;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes zoomIn95 {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Hover scale utilities */
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Text utilities */
+  .text-balance {
+    text-wrap: balance;
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+/* Typography base styles */
+@layer base {
+  html {
+    font-family: var(--font-family-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  to {
-    opacity: 1;
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-bold);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
   }
 }
 
-@keyframes zoomIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* CSS Custom Properties for Theme System */
-:root {
-  --bg: #0B0B0C;
-  --card: #121314;
-  --text: #FAF4E6;
-  --primary: #E24E1B;
-  --secondary: #F2B705;
-  --danger: #D91E36;
-  --success: #12A594;
-}
-
-/* Theme Variants */
-:root[data-theme="block-party"] {
-  --bg: #0E1111;
-  --card: #14213D;
-  --primary: #FF9E00;
-  --secondary: #FF3D9A;
-  --success: #B8E114;
-}
-
-:root[data-theme="earth-rhythm"] {
-  --bg: #211A16;
-  --card: #2A2218;
-  --primary: #C7683B;
-  --secondary: #D9A441;
-  --success: #6B7D43;
-}
-
-:root[data-theme="midnight-vibes"] {
-  --bg: #0A0D14;
-  --card: #141822;
-  --primary: #5B7FFF;
-  --secondary: #8B5CF6;
-  --success: #10B981;
-}
-
-:root[data-theme="sunset-glow"] {
-  --bg: #1A1212;
-  --card: #2D1F1F;
-  --primary: #FF6B35;
-  --secondary: #FFD23F;
-  --success: #06D6A0;
-}
+/* CSS Custom Properties for Theme System - Removed to prevent conflicts with HUEMINT tokens */
 
 /* Global Styles */
 body {
@@ -92,8 +89,38 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--bg);
+  background: #622F54;
+  background-attachment: fixed;
   color: var(--text);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: var(--background-image);
+  background-size: contain;
+  background-position: top center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+  /* Add transparent fade at bottom 5% of the actual cover art image */
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 95%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 95%, rgba(0,0,0,0) 100%);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: top center;
+  mask-position: top center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+#root {
+  position: relative;
+  z-index: 1;
 }
 
 #root {

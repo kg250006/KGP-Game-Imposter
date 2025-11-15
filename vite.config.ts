@@ -9,7 +9,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'icons/*.png'],
+      includeAssets: ['favicon_io/*.png', 'favicon_io/*.ico', 'CoverArt.png'],
       manifest: {
         name: 'The Imposter Game - Social Party Game',
         short_name: 'Imposter Game',
@@ -25,19 +25,19 @@ export default defineConfig({
         dir: 'ltr',
         icons: [
           {
-            src: '/icons/icon-192.png',
+            src: '/favicon_io/android-chrome-192x192.png',
             sizes: '192x192',
             type: 'image/png',
             purpose: 'any',
           },
           {
-            src: '/icons/icon-512.png',
+            src: '/favicon_io/android-chrome-512x512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any',
           },
           {
-            src: '/icons/icon-maskable.png',
+            src: '/favicon_io/android-chrome-512x512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
@@ -45,7 +45,7 @@ export default defineConfig({
         ],
         screenshots: [
           {
-            src: '/og-image.png',
+            src: '/CoverArt.png',
             sizes: '1200x630',
             type: 'image/png',
             label: 'The Imposter Game gameplay',

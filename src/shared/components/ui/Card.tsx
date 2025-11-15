@@ -70,20 +70,19 @@ export function Card({
   'aria-label': ariaLabel,
 }: CardProps): ReactElement {
   const baseStyles = cn(
-    'bg-cream text-ink',
-    'border border-palm/40',
-    'rounded-lg',
+    'bg-surface text-textColor',
+    'rounded-md',
     'p-4 md:p-6',
-    'transition-all duration-smooth'
+    'transition-all duration-normal'
   );
 
   const variantStyles: Record<CardVariant, string> = {
     default: '',
-    elevated: 'shadow-lift hover:shadow-xl hover:border-jollof/60',
+    elevated: 'shadow-md hover:shadow-lg',
   };
 
   const interactiveStyles = onClick
-    ? 'cursor-pointer hover:border-palm/60 active:scale-[0.98]'
+    ? 'cursor-pointer active:scale-[0.98]'
     : '';
 
   const Component = onClick ? 'button' : 'div';

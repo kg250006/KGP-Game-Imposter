@@ -25,7 +25,7 @@ export const PremiumBadge = (): ReactElement | null => {
       : `${minutesRemaining}m left`;
 
   return (
-    <Badge variant="premium" className="flex items-center gap-1">
+    <Badge variant="premium" className="bg-primary/20 text-primary border-primary/40 font-bold flex items-center gap-1">
       <span>✨ Premium</span>
       <span className="text-xs opacity-90">({timeText})</span>
     </Badge>

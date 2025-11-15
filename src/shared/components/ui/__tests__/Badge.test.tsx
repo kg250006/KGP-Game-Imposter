@@ -16,7 +16,7 @@ describe('Badge', () => {
     it('renders with default variant (free)', () => {
       render(<Badge>Free</Badge>);
       const badge = screen.getByText(/free/i);
-      expect(badge).toHaveClass('bg-tealA/20', 'text-tealA');
+      expect(badge).toHaveClass('bg-secondary/20', 'text-secondary');
     });
   });
 
@@ -24,31 +24,31 @@ describe('Badge', () => {
     it('renders premium variant', () => {
       render(<Badge variant="premium">Premium</Badge>);
       const badge = screen.getByText(/premium/i);
-      expect(badge).toHaveClass('bg-gold/20', 'text-gold', 'border-gold/30');
+      expect(badge).toHaveClass('bg-primary/20', 'text-primary', 'border-primary/30');
     });
 
     it('renders locked variant', () => {
       render(<Badge variant="locked">Locked</Badge>);
       const badge = screen.getByText(/locked/i);
-      expect(badge).toHaveClass('bg-gray-500/20', 'text-gray-400');
+      expect(badge).toHaveClass('bg-grayMedium/20', 'text-grayLight');
     });
 
     it('renders free variant', () => {
       render(<Badge variant="free">Free</Badge>);
       const badge = screen.getByText(/free/i);
-      expect(badge).toHaveClass('bg-tealA/20', 'text-tealA');
+      expect(badge).toHaveClass('bg-secondary/20', 'text-secondary');
     });
 
     it('renders success variant', () => {
       render(<Badge variant="success">Success</Badge>);
       const badge = screen.getByText(/success/i);
-      expect(badge).toHaveClass('bg-palm/20', 'text-palm');
+      expect(badge).toHaveClass('bg-success/20', 'text-success');
     });
 
     it('renders unlocked variant with green styling', () => {
       render(<Badge variant="unlocked">Unlocked</Badge>);
       const badge = screen.getByText(/unlocked/i);
-      expect(badge).toHaveClass('bg-palm/20', 'text-palm', 'border-palm/30');
+      expect(badge).toHaveClass('bg-primary/20', 'text-primary', 'border-primary/30');
     });
   });
 
@@ -178,15 +178,15 @@ describe('Badge', () => {
     it('merges custom className with default styles', () => {
       render(<Badge className="ml-2">Test</Badge>);
       const badge = screen.getByText(/test/i);
-      expect(badge).toHaveClass('ml-2', 'rounded-md', 'border');
+      expect(badge).toHaveClass('ml-2', 'rounded-sm', 'border');
     });
   });
 
   describe('visual appearance', () => {
-    it('has rounded-md shape (modernized from rounded-full)', () => {
+    it('has rounded-sm shape (modernized tighter pill)', () => {
       render(<Badge>Test</Badge>);
       const badge = screen.getByText(/test/i);
-      expect(badge).toHaveClass('rounded-md');
+      expect(badge).toHaveClass('rounded-sm');
     });
 
     it('has inline-flex display', () => {

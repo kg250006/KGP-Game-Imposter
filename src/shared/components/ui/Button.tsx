@@ -86,10 +86,10 @@ export function Button({
 }: ButtonProps): ReactElement {
   const baseStyles = cn(
     'inline-flex items-center justify-center',
-    'rounded-lg shadow-lift',
+    'rounded-md',
     'font-semibold',
     'transition-transform duration-smooth',
-    'hover:scale-102 hover:shadow-xl',
+    'hover:scale-102',
     'focus:outline-none focus:ring-2 focus:ring-offset-2',
     'active:scale-95',
     'disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:hover:scale-100'
@@ -97,19 +97,19 @@ export function Button({
 
   const variantStyles: Record<ButtonVariant, string> = {
     primary: cn(
-      'bg-jollof text-cream',
-      'hover:bg-jollof/90',
-      'focus:ring-jollof'
+      'bg-primary text-navyDark',
+      'hover:bg-primary/90',
+      'focus:ring-primary'
     ),
     secondary: cn(
-      'bg-gold text-ink',
-      'hover:bg-gold/90',
-      'focus:ring-gold'
+      'bg-secondary text-navyDark',
+      'hover:bg-secondary/90',
+      'focus:ring-secondary'
     ),
     danger: cn(
-      'bg-kente text-cream',
-      'hover:bg-kente/90',
-      'focus:ring-kente'
+      'bg-error text-white',
+      'hover:bg-error/90',
+      'focus:ring-error'
     ),
   };
 

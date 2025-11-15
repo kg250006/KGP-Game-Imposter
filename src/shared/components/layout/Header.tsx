@@ -101,8 +101,8 @@ export function Header({
     <header
       className={cn(
         'w-full',
-        'bg-ink text-cream',
-        'border-b border-palm/40',
+        'bg-background text-textColor',
+        'border-b border-border/40',
         'p-4 md:p-6',
         className
       )}
@@ -121,7 +121,7 @@ export function Header({
           onTouchStart={handleLogoMouseDown}
           onTouchEnd={handleLogoMouseUp}
         >
-          <h1 className="text-xl md:text-2xl font-bold text-gold">
+          <h1 className="text-xl md:text-2xl font-bold text-primary">
             {title}
           </h1>
         </div>
@@ -135,7 +135,7 @@ export function Header({
               className={cn(
                 'transition-transform duration-fast',
                 'hover:scale-105 active:scale-95',
-                'focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-ink',
+                'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background',
                 'rounded-full'
               )}
               aria-label="Premium status"
@@ -153,10 +153,10 @@ export function Header({
               onClick={onSettingsClick}
               className={cn(
                 'p-2 rounded-lg',
-                'text-cream hover:text-gold',
-                'hover:bg-palm/20',
+                'text-textColor hover:text-primary',
+                'hover:bg-primary/20',
                 'transition-all duration-fast',
-                'focus:outline-none focus:ring-2 focus:ring-gold',
+                'focus:outline-none focus:ring-2 focus:ring-primary',
                 'active:scale-95'
               )}
               aria-label="Settings"

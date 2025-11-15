@@ -7,6 +7,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { isFeatureAllowed } from '../utils/premiumValidation';
 import { PremiumFeature } from '../types/premium.types';
 import { usePremiumStore } from '../store/premiumStore';
+import { PLAYER_COUNT_CONFIG } from '@/config/playerCounts';
 
 describe('premiumValidation', () => {
   beforeEach(() => {
@@ -76,8 +77,9 @@ describe('premiumValidation', () => {
     const result = isFeatureAllowed(PremiumFeature.LARGE_PARTY);
 
     if (!result.allowed && result.reason === 'premium_required') {
+      const expectedPlayerRange = `${PLAYER_COUNT_CONFIG.FREE_TIER_MAX_PLAYERS + 1}-${PLAYER_COUNT_CONFIG.PREMIUM_TIER_MAX_PLAYERS}`;
       expect(result.upgradeMessage).toBeDefined();
-      expect(result.upgradeMessage).toContain('6-10 players');
+      expect(result.upgradeMessage).toContain(`${expectedPlayerRange} players`);
     }
   });
 });

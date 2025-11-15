@@ -120,7 +120,7 @@ export function Modal({
       <div
         className={cn(
           'absolute inset-0',
-          'bg-black/50 backdrop-blur-sm',
+          'bg-black/60 backdrop-blur-sm',
           overlayClassName
         )}
         onClick={onClose}
@@ -132,22 +132,23 @@ export function Modal({
         <div
           className={cn(
             'relative',
-            'bg-cream border border-palm/40',
-            'rounded-lg shadow-lift',
+            'bg-surface border border-border/20',
+            'rounded-lg shadow-xl',
+            'text-textColor',
             'max-w-md w-full',
             'max-h-[90vh] overflow-y-auto',
-            'animate-in zoom-in-95 duration-200',
+            'animate-in zoom-in-95 duration-normal',
             className
           )}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
           {(title || showCloseButton) && (
-            <div className="flex items-center justify-between p-4 md:p-6 border-b border-palm/20">
+            <div className="flex items-center justify-between p-4 md:p-6 border-b border-border/20">
               {title && (
                 <h2
                   id="modal-title"
-                  className="text-xl md:text-2xl font-bold text-ink"
+                  className="text-xl md:text-2xl font-bold text-textColor"
                 >
                   {title}
                 </h2>
@@ -157,9 +158,9 @@ export function Modal({
                   onClick={onClose}
                   className={cn(
                     'p-2 rounded-lg',
-                    'text-ink/60 hover:text-ink hover:bg-palm/10',
+                    'text-textColor/60 hover:text-textColor hover:bg-primary/10',
                     'transition-colors duration-fast',
-                    'focus:outline-none focus:ring-2 focus:ring-palm',
+                    'focus:outline-none focus:ring-2 focus:ring-primary',
                     !title && 'ml-auto'
                   )}
                   aria-label="Close modal"

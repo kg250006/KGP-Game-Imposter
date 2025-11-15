@@ -61,6 +61,8 @@ export interface Player {
   id: PlayerId;
   /** Player number (1-10) for display */
   playerNumber: number;
+  /** Player's custom name (defaults to "Player {n}") */
+  name: string;
   /** Player's current score */
   score: number;
   /** Whether this player is the imposter for current round */
@@ -80,6 +82,8 @@ export interface WordData {
   word: string;
   /** Category this word belongs to */
   category: CategoryId;
+  /** Optional hint for imposter (subtle category context) */
+  hint?: string;
   /** Difficulty level (optional, for challenge mode) */
   difficulty?: 'easy' | 'medium' | 'hard';
 }
@@ -143,6 +147,8 @@ export interface GameSettings {
   confettiEnabled: boolean;
   /** Active theme ID */
   themeId: string;
+  /** Whether to show hints to imposter */
+  imposterHintsEnabled: boolean;
 }
 
 /**

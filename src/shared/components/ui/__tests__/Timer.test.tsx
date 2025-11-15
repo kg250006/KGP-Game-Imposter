@@ -137,13 +137,13 @@ describe('Timer', () => {
       });
 
       const timer = screen.getByRole('timer');
-      expect(timer).toHaveClass('text-kente');
+      expect(timer).toHaveClass('text-error');
     });
 
     it('uses normal color when time is not low', () => {
       render(<Timer seconds={30} isActive={false} showProgress={false} />);
       const timer = screen.getByRole('timer');
-      expect(timer).toHaveClass('text-ink');
+      expect(timer).toHaveClass('text-textColor');
     });
   });
 

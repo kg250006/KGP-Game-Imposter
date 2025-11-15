@@ -5,6 +5,7 @@
 
 import { ReactElement } from 'react';
 import { Card } from '../../../shared/components/ui/Card';
+import { getPlayerCountText } from '@/config/playerCounts';
 
 interface Feature {
   icon: string;
@@ -15,7 +16,7 @@ interface Feature {
 const PREMIUM_FEATURES: Feature[] = [
   {
     icon: '',
-    title: '6-10 Players',
+    title: getPlayerCountText().premiumFeatureText.split(' (')[0] || 'Play with up to 10 players', // "Play with up to 10 players"
     description: 'Party-size gameplay for larger groups',
   },
   {
@@ -56,14 +57,14 @@ const PREMIUM_FEATURES: Feature[] = [
  */
 export const PremiumFeaturesCard = (): ReactElement => {
   return (
-    <Card className="p-6 bg-gradient-to-br from-palm/10 to-tealA/10 border-palm/20">
-      <h3 className="text-xl font-bold text-jollof mb-4">Premium Features</h3>
+    <Card className="p-6 bg-surface border-border/40">
+      <h3 className="text-xl font-bold text-primary mb-4">Premium Features</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {PREMIUM_FEATURES.map((feature) => (
           <div key={feature.title} className="flex items-start gap-3">
             <div className="flex-1">
-              <h4 className="font-semibold text-ink">{feature.title}</h4>
-              <p className="text-sm text-ink/70">{feature.description}</p>
+              <h4 className="font-semibold text-textColor">{feature.title}</h4>
+              <p className="text-sm text-textColor/70">{feature.description}</p>
             </div>
           </div>
         ))}

@@ -20,6 +20,7 @@ import {
 import { selectRandomItem } from '../../../shared/utils/crypto';
 import { calculateCrewPoints, calculateImposterPoints } from '../../../shared/utils/scoring';
 import { useStatsStore } from '../../stats/store/statsStore';
+import { generateDefaultName } from '../utils/playerNameValidation';
 
 /**
  * Game store actions interface
@@ -35,7 +36,7 @@ interface GameActions {
    * Starts a new round
    * Selects a random imposter and word
    */
-  startRound: (word: { word: string; category: string }) => void;
+  startRound: (word: { word: string; category: string; hint?: string }) => void;
 
   /**
    * Reveals word to a player (tracks reveal progress)
@@ -78,6 +79,16 @@ interface GameActions {
   updateSettings: (settings: Partial<GameSettings>) => void;
 
   /**
+   * Updates a player's name
+   */
+  updatePlayerName: (playerNumber: number, name: string) => void;
+
+  /**
+   * Resets all player names to defaults
+   */
+  resetPlayerNames: () => void;
+
+  /**
    * Returns to landing page
    */
   returnToLanding: () => void;
@@ -99,6 +110,7 @@ const defaultSettings: GameSettings = {
   discussionTimerDuration: 120,
   confettiEnabled: true,
   themeId: 'neo-afro-modern',
+  imposterHintsEnabled: false,
 };
 
 /**
@@ -112,24 +124,6 @@ const initialState: GameState = {
   settings: defaultSettings,
   startedAt: null,
 };
-
-/**
- * Creates initial players array
- */
-function createPlayers(count: number): Player[] {
-  const players: Player[] = [];
-  for (let i = 1; i <= count; i++) {
-    players.push({
-      id: createPlayerId(`player-${i}`),
-      playerNumber: i,
-      score: 0,
-      isImposter: false,
-      hasVoted: false,
-      votedFor: null,
-    });
-  }
-  return players;
-}
 
 /**
  * Selects a random imposter from players
@@ -147,7 +141,36 @@ export const useGameStore = create<GameStore>()(
       ...initialState,
 
       startGame: (settings: GameSettings) => {
-        const players = createPlayers(settings.playerCount);
+        const { players: existingPlayers } = get();
+        let players: Player[];
+
+        // Preserve existing player names if we have them
+        if (existingPlayers.length === settings.playerCount) {
+          // Same player count - preserve all names, just reset game state
+          players = existingPlayers.map(p => ({
+            ...p,
+            score: 0,
+            isImposter: false,
+            hasVoted: false,
+            votedFor: null,
+          }));
+        } else {
+          // Player count changed - preserve names where possible
+          players = [];
+          for (let i = 1; i <= settings.playerCount; i++) {
+            const existingPlayer = existingPlayers.find(p => p.playerNumber === i);
+            players.push({
+              id: createPlayerId(`player-${i}`),
+              playerNumber: i,
+              name: existingPlayer?.name || generateDefaultName(i),
+              score: 0,
+              isImposter: false,
+              hasVoted: false,
+              votedFor: null,
+            });
+          }
+        }
+
         set({
           phase: GamePhase.LOBBY,
           players,
@@ -158,7 +181,7 @@ export const useGameStore = create<GameStore>()(
         });
       },
 
-      startRound: (word: { word: string; category: string }) => {
+      startRound: (word: { word: string; category: string; hint?: string }) => {
         const { players, roundHistory } = get();
 
         // Select random imposter
@@ -179,6 +202,7 @@ export const useGameStore = create<GameStore>()(
           word: {
             word: word.word,
             category: createCategoryId(word.category),
+            ...(word.hint !== undefined && { hint: word.hint }),
           },
           imposterId: imposter.id,
           votedOutPlayer: null,
@@ -342,10 +366,56 @@ export const useGameStore = create<GameStore>()(
       },
 
       updateSettings: (newSettings: Partial<GameSettings>) => {
-        const { settings } = get();
-        set({
-          settings: { ...settings, ...newSettings },
-        });
+        const { settings, players } = get();
+        const updatedSettings = { ...settings, ...newSettings };
+
+        // If player count changed, adjust players array
+        if (newSettings.playerCount !== undefined && newSettings.playerCount !== settings.playerCount) {
+          const newCount = newSettings.playerCount;
+          const currentCount = players.length;
+
+          if (newCount > currentCount) {
+            // Add new players with default names
+            const newPlayers = [...players];
+            for (let i = currentCount + 1; i <= newCount; i++) {
+              newPlayers.push({
+                id: createPlayerId(`player-${i}`),
+                playerNumber: i,
+                name: generateDefaultName(i),
+                score: 0,
+                isImposter: false,
+                hasVoted: false,
+                votedFor: null,
+              });
+            }
+            set({ settings: updatedSettings, players: newPlayers });
+          } else if (newCount < currentCount) {
+            // Remove excess players (keep names for remaining players)
+            const trimmedPlayers = players.slice(0, newCount);
+            set({ settings: updatedSettings, players: trimmedPlayers });
+          } else {
+            set({ settings: updatedSettings });
+          }
+        } else {
+          set({ settings: updatedSettings });
+        }
+      },
+
+      updatePlayerName: (playerNumber: number, name: string) => {
+        const { players } = get();
+        const updatedPlayers = players.map(p =>
+          p.playerNumber === playerNumber ? { ...p, name } : p
+        );
+        set({ players: updatedPlayers });
+      },
+
+      resetPlayerNames: () => {
+        const { players } = get();
+        const updatedPlayers = players.map(p => ({
+          ...p,
+          name: generateDefaultName(p.playerNumber),
+        }));
+        set({ players: updatedPlayers });
       },
 
       returnToLanding: () => {

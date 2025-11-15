@@ -29,14 +29,14 @@ describe('Card', () => {
     it('renders default variant', () => {
       const { container } = render(<Card variant="default">Default</Card>);
       const card = container.firstChild;
-      expect(card).toHaveClass('bg-cream');
-      expect(card).not.toHaveClass('shadow-lift');
+      expect(card).toHaveClass('bg-surface');
+      expect(card).not.toHaveClass('shadow-md');
     });
 
     it('renders elevated variant', () => {
       const { container } = render(<Card variant="elevated">Elevated</Card>);
       const card = container.firstChild;
-      expect(card).toHaveClass('shadow-lift');
+      expect(card).toHaveClass('shadow-md');
     });
   });
 

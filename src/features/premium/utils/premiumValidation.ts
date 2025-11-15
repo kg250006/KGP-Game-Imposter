@@ -7,13 +7,16 @@ import { usePremiumStore } from '../store/premiumStore';
 import { useFeatureFlagsStore } from '../../featureFlags/store/featureFlagsStore';
 import { PremiumFeature, type FeatureGateResult } from '../types/premium.types';
 import { OperatorMode } from '../../featureFlags/types/flags.types';
+import { PLAYER_COUNT_CONFIG } from '@/config/playerCounts';
+import { DEFAULT_PREMIUM_DURATION_HOURS, PREMIUM_PRICE } from '../constants';
 
 /**
  * Feature upgrade messages for different premium features
+ * Uses configuration values for player counts, pricing, and duration
  */
 const UPGRADE_MESSAGES: Record<PremiumFeature, string> = {
   [PremiumFeature.LARGE_PARTY]:
-    'Unlock 6-10 players for party-size gameplay! Premium: $2 for 24 hours.',
+    `Unlock ${PLAYER_COUNT_CONFIG.FREE_TIER_MAX_PLAYERS + 1}-${PLAYER_COUNT_CONFIG.PREMIUM_TIER_MAX_PLAYERS} players for party-size gameplay! Premium: $${PREMIUM_PRICE} for ${DEFAULT_PREMIUM_DURATION_HOURS} hours.`,
   [PremiumFeature.EXCLUSIVE_CATEGORIES]:
     'Get access to 9 categories including exclusive Grown Folks, Inside Jokes, and Wild Card packs!',
   [PremiumFeature.CUSTOM_WORDS]:

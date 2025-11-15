@@ -104,9 +104,9 @@ export function Timer({
     return (
       <div
         className={cn(
-          'text-3xl md:text-4xl font-bold',
-          isLowTime && 'animate-pulse text-kente',
-          !isLowTime && 'text-ink',
+          'text-3xl md:text-4xl',
+          isLowTime && 'animate-pulse text-error font-extrabold',
+          !isLowTime && 'text-textColor font-bold',
           className
         )}
         role="timer"
@@ -135,17 +135,17 @@ export function Timer({
         )}
         style={{
           background: `conic-gradient(
-            ${isLowTime ? '#D91E36' : '#F2B705'} ${progress * 3.6}deg,
-            rgba(15, 61, 46, 0.2) ${progress * 3.6}deg
+            ${isLowTime ? '#dc2626' : 'var(--color-primary)'} ${progress * 3.6}deg,
+            transparent ${progress * 3.6}deg
           )`,
         }}
       >
         {/* Inner circle */}
-        <div className="absolute inset-2 bg-cream rounded-full flex items-center justify-center shadow-inner">
+        <div className="absolute inset-2 bg-surface rounded-full flex items-center justify-center shadow-inner">
           <span
             className={cn(
-              'text-3xl md:text-4xl font-bold',
-              isLowTime ? 'text-kente' : 'text-ink'
+              'text-3xl md:text-4xl',
+              isLowTime ? 'text-error font-extrabold' : 'text-textColor font-bold'
             )}
           >
             {formatTime(timeRemaining)}

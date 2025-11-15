@@ -36,6 +36,7 @@ export const WordDataSchema = z.object({
 export const PlayerSchema = z.object({
   id: PlayerIdSchema,
   playerNumber: z.number().int().min(1).max(12),
+  name: z.string().trim().min(1).max(15),
   score: z.number().int().min(0),
   isImposter: z.boolean(),
   hasVoted: z.boolean(),

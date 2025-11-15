@@ -39,21 +39,21 @@ export function DiscussionScreen(): ReactElement {
   };
 
   return (
-    <div className="min-h-screen bg-hero-afro flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <div className="max-w-2xl w-full">
-        <Card variant="elevated" className="text-center">
+        <Card variant="elevated" className="text-center bg-surface py-12">
           {/* Main heading */}
-          <h1 className="text-6xl md:text-8xl font-bold text-jollof mb-6">
+          <h1 className="text-5xl md:text-6xl font-extrabold text-primary mb-6 uppercase">
             Discuss!
           </h1>
 
           {/* Instructions */}
           <div className="mb-8 space-y-3">
-            <p className="text-lg md:text-xl text-ink font-medium">
+            <p className="text-lg text-textColor">
               Describe the word without saying it
             </p>
-            <p className="text-sm md:text-base text-ink/70">
-              The imposter must blend in without knowing the word!
+            <p className="text-lg text-textMuted">
+              The imposter must blend in!
             </p>
           </div>
 
@@ -69,13 +69,12 @@ export function DiscussionScreen(): ReactElement {
           )}
 
           {/* Tips */}
-          <div className="bg-palm/10 rounded-lg p-4 mb-8 text-left">
-            <h3 className="font-bold text-ink text-sm mb-2">Pro Tips:</h3>
-            <ul className="text-ink/70 text-xs space-y-1 list-disc list-inside">
-              <li>Take turns describing your word</li>
-              <li>Ask follow-up questions to suspicious players</li>
-              <li>The imposter should listen and try to fit in</li>
-              <li>Don't say the word directly!</li>
+          <div className="bg-primary/10 rounded-lg p-6 mb-8 text-left">
+            <h3 className="text-lg font-bold text-primary mb-4 uppercase">Pro Tips:</h3>
+            <ul className="text-textColor space-y-2">
+              <li>• Take turns describing</li>
+              <li>• Ask follow-up questions</li>
+              <li>• Imposter: listen and fit in!</li>
             </ul>
           </div>
 

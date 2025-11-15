@@ -8,11 +8,12 @@ import { selectRandomItem } from '@/shared/utils/crypto';
 
 /**
  * Word list data structure
+ * Supports both legacy (string[]) and new (object[]) formats
  */
 interface WordList {
   category: string;
   premium: boolean;
-  words: string[];
+  words: string[] | Array<{ word: string; hint?: string }>;
 }
 
 /**
@@ -23,27 +24,75 @@ export interface CategoryMeta {
   name: string;
   premium: boolean;
   icon: string;
+  ageRange?: string;      // e.g., "11-17", "18+", "all"
+  description?: string;   // e.g., "Age-appropriate words..."
 }
 
 /**
  * All available categories
- * Note: Random is first as it's the default category
- * FREE categories: 6 (random, food, travel, animals, technology, places)
- * PREMIUM categories: 6 (black-culture, tv-movies, slang, grown-folks, inside-jokes, wild-card)
+ * NEW STRUCTURE: 6 generational/age-based categories
+ * - 3 FREE: random, kid-topics, trending-topics
+ * - 3 PREMIUM: black-card, hip-hop-culture, premium-culture
+ *
+ * Migration from old categories:
+ * - random (FREE, unchanged)
+ * - kid-topics (NEW FREE, merged: animals + age-appropriate from others)
+ * - trending-topics (NEW FREE, merged: slang + technology + current culture)
+ * - black-card (PREMIUM, renamed from black-culture)
+ * - hip-hop-culture (NEW PREMIUM, hip-hop specific content)
+ * - premium-culture (PREMIUM, placeholder to be decided)
+ *
+ * REMOVED: food, travel, places, tv-movies, grown-folks, inside-jokes, wild-card
  */
 export const CATEGORIES: CategoryMeta[] = [
-  { id: 'random', name: 'Random', premium: false, icon: '' },
-  { id: 'food', name: 'Food', premium: false, icon: '' },
-  { id: 'travel', name: 'Travel', premium: false, icon: '' },
-  { id: 'animals', name: 'Animals', premium: false, icon: '' },
-  { id: 'technology', name: 'Technology', premium: false, icon: '' },
-  { id: 'places', name: 'Places', premium: false, icon: '' },
-  { id: 'black-culture', name: 'Black Culture', premium: true, icon: '' },
-  { id: 'tv-movies', name: 'TV & Movies', premium: true, icon: '' },
-  { id: 'slang', name: 'Slang', premium: true, icon: '' },
-  { id: 'grown-folks', name: 'Grown Folks', premium: true, icon: '' },
-  { id: 'inside-jokes', name: 'Inside Jokes', premium: true, icon: '' },
-  { id: 'wild-card', name: 'Wild Card', premium: true, icon: '' },
+  {
+    id: 'random',
+    name: 'Random Topics',
+    premium: false,
+    icon: '🎲',
+    ageRange: 'all',
+    description: 'General mixed words suitable for all ages',
+  },
+  {
+    id: 'kid-topics',
+    name: 'Kid Topics',
+    premium: false,
+    icon: '🧒',
+    ageRange: '5-10',
+    description: 'Age-appropriate words with easier vocabulary',
+  },
+  {
+    id: 'trending-topics',
+    name: 'Trending Topics',
+    premium: false,
+    icon: '🔥',
+    ageRange: '11-17',
+    description: 'Modern slang, trending people, places, and things',
+  },
+  {
+    id: 'black-card',
+    name: 'Black Card',
+    premium: true,
+    icon: '♠️',
+    ageRange: 'all',
+    description: 'Cultural topics and nature themes',
+  },
+  {
+    id: 'hip-hop-culture',
+    name: 'Hip-Hop Culture',
+    premium: true,
+    icon: '🎤',
+    ageRange: 'all',
+    description: 'Hip-hop elements: graffiti, breakdance, artists, music',
+  },
+  {
+    id: 'premium-culture',
+    name: 'Adult Night',
+    premium: true,
+    icon: '🌙',
+    ageRange: '18+',
+    description: 'Mature themes for couples and adult game nights',
+  },
 ];
 
 /**
@@ -103,34 +152,50 @@ export function useWords() {
 
   /**
    * Select a random word from a category, excluding already used words
+   * Supports both string[] and object[] word formats
    */
-  const selectRandomWord = useCallback(async (category: string): Promise<{ word: string; category: string } | null> => {
+  const selectRandomWord = useCallback(async (category: string): Promise<{
+    word: string;
+    category: string;
+    hint?: string;
+  } | null> => {
     const wordList = await loadCategory(category);
-    
+
     if (!wordList || wordList.words.length === 0) {
       return null;
     }
 
+    // Normalize words to objects
+    const normalizedWords = wordList.words.map(w => {
+      if (typeof w === 'string') {
+        return { word: w, hint: undefined };
+      }
+      return w;
+    });
+
     // Filter out used words
-    const availableWords = wordList.words.filter(word => !usedWords.has(word));
+    const availableWords = normalizedWords.filter(w => !usedWords.has(w.word));
 
     // If all words used, reset
     if (availableWords.length === 0) {
       setUsedWords(new Set());
-      return { 
-        word: selectRandomItem(wordList.words), 
-        category 
+      const selected = selectRandomItem(normalizedWords);
+      return {
+        word: selected.word,
+        category,
+        ...(selected.hint ? { hint: selected.hint } : {}),
       };
     }
 
     const selectedWord = selectRandomItem(availableWords);
-    
+
     // Mark as used
-    setUsedWords(prev => new Set([...prev, selectedWord]));
+    setUsedWords(prev => new Set([...prev, selectedWord.word]));
 
     return {
-      word: selectedWord,
+      word: selectedWord.word,
       category,
+      ...(selectedWord.hint ? { hint: selectedWord.hint } : {}),
     };
   }, [loadCategory, usedWords]);
 

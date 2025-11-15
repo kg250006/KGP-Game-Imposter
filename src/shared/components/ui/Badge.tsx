@@ -80,34 +80,35 @@ export function Badge({
 }: BadgeProps): ReactElement {
   const baseStyles = cn(
     'inline-flex items-center justify-center gap-1',
-    'rounded-md',
-    'font-medium',
+    'rounded-sm',
+    'font-semibold',
+    'text-xs uppercase tracking-wide',
     'border',
-    'transition-all duration-smooth'
+    'transition-all duration-fast'
   );
 
   const variantStyles: Record<BadgeVariant, string> = {
     premium: cn(
-      'bg-gold/20 text-gold',
-      'border-gold/30',
+      'bg-primary/20 text-primary',
+      'border-primary/30',
       'shadow-sm'
     ),
     locked: cn(
-      'bg-gray-500/20 text-gray-400',
-      'border-gray-500/30'
+      'bg-grayMedium/20 text-grayLight',
+      'border-grayMedium/30'
     ),
     unlocked: cn(
-      'bg-palm/20 text-palm',
-      'border-palm/30',
+      'bg-primary/20 text-primary',
+      'border-primary/30',
       'shadow-sm'
     ),
     free: cn(
-      'bg-tealA/20 text-tealA',
-      'border-tealA/30'
+      'bg-secondary/20 text-secondary',
+      'border-secondary/30'
     ),
     success: cn(
-      'bg-palm/20 text-palm',
-      'border-palm/30'
+      'bg-success/20 text-success',
+      'border-success/30'
     ),
   };
 

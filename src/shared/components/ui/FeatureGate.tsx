@@ -137,7 +137,7 @@ export function FeatureGate({
   const upgradeText = result.upgradeMessage || `Upgrade to premium to access ${feature.replace(/_/g, ' ')}`;
 
   return (
-    <div className="p-4 text-center text-ink/60">
+    <div className="p-4 text-center text-textColor/70">
       <Badge variant="locked" showIcon className="mb-2">
         Premium Required
       </Badge>

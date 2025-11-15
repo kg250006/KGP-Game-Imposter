@@ -43,23 +43,23 @@ export const PremiumUpsellModal = ({
     >
       <div className="space-y-6">
         {message && (
-          <p className="text-ink text-center text-lg font-medium">{message}</p>
+          <p className="text-textColor text-center text-lg font-medium">{message}</p>
         )}
 
-        <div className="bg-gradient-to-br from-jollof/15 to-gold/10 border-2 border-gold/40 rounded-lg p-4 text-center shadow-glowGold">
-          <p className="text-2xl font-bold text-jollof mb-2">$2 for 24 Hours</p>
-          <p className="text-sm text-ink/70 font-medium">
+        <div className="bg-primary/10 border border-primary/40 rounded-md p-4 text-center">
+          <p className="text-2xl font-bold text-primary mb-2">$2 for 24 Hours</p>
+          <p className="text-sm text-textColor/70 font-medium">
             One-time payment • No subscription • Instant access
           </p>
         </div>
 
-        <p className="text-xs text-center text-ink/60">
+        <p className="text-xs text-center text-textColor/60">
           By making a payment, you agree to our{' '}
           <a
             href="/terms.html"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-tealA hover:text-tealA/80 underline transition-colors"
+            className="text-primary hover:text-primary/80 underline transition-colors"
           >
             Terms & Conditions
           </a>
@@ -69,7 +69,7 @@ export const PremiumUpsellModal = ({
           <Button variant="secondary" onClick={onClose} className="flex-1 py-2">
             Maybe Later
           </Button>
-          <Button variant="primary" onClick={handleUnlock} className="flex-1 py-2 bg-gradient-to-r from-jollof to-gold hover:from-jollof/90 hover:to-gold/90">
+          <Button variant="primary" onClick={handleUnlock} className="flex-1 py-2">
             Pay Now ($2)
           </Button>
         </div>

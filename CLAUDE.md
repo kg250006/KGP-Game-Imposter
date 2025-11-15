@@ -1,156 +1,313 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code when working with Python code in this repository.
+This file provides guidance to Claude Code when working on The Imposter Game.
 
-## Edit Lock Protocol
+## Project Overview
 
-### CRITICAL: All agents MUST follow these edit lock rules:
+**The Imposter Game** is a mobile-first social party game web app where players take turns revealing secret words, discuss them, and vote to identify the imposter. Built with React 18, TypeScript, and Tailwind CSS, deployed as a static PWA on Netlify.
 
-1. **Before editing any file with an edit lock mechanism:**
-   - Check if the file has an edit lock at the top (line 1 comment)
-   - If edit lock exists and is not null/empty, WAIT for the lock to be released
-   - Set the edit lock to your agent name before making any edits
-   
-2. **After editing:**
-   - ALWAYS remove the edit lock (set to null/empty) immediately after completing edits
-   - Never leave an edit lock in place - this blocks other agents
-   
-3. **Edit lock syntax:**
-   - For code files: `# edit_lock: agent_name, created at <timestamp>` at line 1
-   - For JSON files: `"edit_lock": "agent_name, created at <timestamp>"` as the first field
-   - For other files: `<!-- edit_lock: agent_name, created at <timestamp> -->` or appropriate comment syntax at line 1
+### Tech Stack
+- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS
+- **State Management**: Zustand (multiple stores)
+- **Testing**: Vitest + @testing-library/react
+- **Deployment**: Netlify (static hosting)
+- **PWA**: vite-plugin-pwa (offline support)
+- **Payments**: Stripe, PayPal, Apple Pay
+- **Styling**: Tailwind CSS with custom Neo-Afro Modern theme
 
-4. **Timeout handling:**
-   - If an edit lock has been held for more than 5 minutes, it may be considered stale
-   - Report stale locks to the user
-   - Activate the owning agent of the lock and have them update the timestamp or remove the edit lock as needed
-
-## Core Development Philosophy (In order of priority)
-
-### TESTING IS TRUTH TESTING IS TRUTH TESTING IS TRUTH TESTING IS TRUTH TESTING IS TRUTH TESTING IS TRUTH
-
-- Your work is not complete until you write/update tests to cover your changes, the tests all pass, and the docker build suceeds. 
-- When writing/updating tests:
-  - If you write/update backend code, write/update unit tests for all the isolated components and write/update integration tests to test any functionality that requires network connection
-  - If you write/update frontend code, write/update unit tests for all isolated components and write/update end-to-end browser tests that actually use the browser to check what you wrote
-- Test coverage overall must reach and remain at 100%
-- DO NOT CALL WORK COMPLETE WITHOUT TESTING
-
-### Always Use Agents Always Use Agents Always Use Agents Always Use Agents Always Use Agents
-
-Whenever creating todos and starting tasks, always assign as many relevant agents as possible. Assign all the agents who's expertise will provide the most complete solution with tests, code review, and build testing. DO NOT EXECUTE TASKS WITHOUT AGENTS
-
-### Parallel Todos
-
-Wherever possible, write todo items in such a way that they can all be parallelized at once, the maximum number of allowed concurrent subtasks or agents is 20, always try to use the maximum number of agents where possible and intellgent to do so. When creating sub-tasks, you can use copies of agents as needed, just make sure to append a unique UUID to the agent name to preserve the edit lock functionality. ALWAYS PARALLELIZE INDEPENDENT TASK. NEVER SERIALIZE INDEPENDENT TASKS. ALWAYS SERIALIZE DEPENDENT TASKS. NEVER PARALLELIZE DEPENDENT TASKS.
-
-### Stay Up To Date
-
-When starting a task, always read the summary.md files of all the folders that you plan to edit files in. After completing edits, update the summary.md file with whater was changed/added so that the summary remains accurate. Re-read the summary.md files relevant to your work between context compacts. If no summary.md files exist, create a summary.md at each folder level using the maximum number of agent subtasks possible. 
-
-
-### Documentation is only for you
-
-- Never create documentation for the end user or developer. All documentation is for claude reference only. 
-- Only write/update the following documentation:
-  - summary.md files at each folder level make directory traversal easy for yourself and any agents
-  - Overall project summary at README.md. This is the only MD file that users will occasionaly read
-  - changelog.txt, a running changelog of changes made since the creation of this changelog
-- Produce no other md files
-- The summary.md files must be updated after every file change
-- The README.md must be updated as a part of summarizing work done. The README must contain
-  - The current state of the project
-- The changelog.txt format is [Date : Git User] as a header then a bulleted list of changes in order of size and impact.
-
-
-### KISS (Keep It Simple, Stupid)
-
-Simplicity should be a key goal in design. Choose straightforward solutions over complex ones whenever possible. Simple solutions are easier to understand, maintain, and debug.
-
-### YAGNI (You Aren't Gonna Need It)
-
-Avoid building functionality on speculation. Implement features only when they are needed, not when you anticipate they might be useful in the future.
-
-### Reduce, Reuse, Recycle
-
-Before creating net-new code, always ask yourself "Is this functionality already written somewhere else?", "Can I take any existing functionality and extend it to get what I want?", "Can I reduce this code down to make it even more modular and reusable right now?".
-
-## Run the Agent
-
-UV run agent
-
-Always validate with ruff
-"uv run ruff check --fix"
-"uv run ruff check"
-
-Always validate with pytest
-"uv run pytest -v"
-
-## Testing rules
-When testing the application, run tests directly using pytest with uv:
-"uv run pytest -v"
-
-## MANDATORY Project Structure - THIS IS LAW
-
-### CRITICAL: This is the ONLY acceptable project structure. All agents MUST follow this structure exactly.
-
+### Project Structure
 ```
-_ProjectManagement/
-├── Initiatives/                    # PRIMARY DIRECTORY - ALL WORK HAPPENS HERE
-│   ├── _INDEX.md                  # Master list of all initiatives
-│   ├── _templates/                # Mandatory templates for all new items
-│   │   ├── initiative-template.md
-│   │   ├── project-template.md
-│   │   ├── PRD-template.md
-│   │   └── PRP-template.md
-│   ├── linear-integration.json    # Linear sync data - DO NOT MODIFY MANUALLY
-│   └── [Initiative Name]/         # Each initiative folder
-│       ├── README.md              # Initiative overview and status
-│       └── [Project Name]/        # Each project folder
-│           ├── README.md          # Project details and current status
-│           ├── PRD.md             # Product Requirements Document
-│           └── PRPs/              # Product Requirement Prompts folder
-│               └── [feature].md   # Individual PRP files
-├── 00-INTAKE/                     # New requests before assignment
-├── Team-TechTeam/                 # Team-specific documentation
-├── Analytics/                     # Performance and metrics
-├── Workflows/                     # Process documentation
-├── Archive/                       # DO NOT USE - Historical data only
-├── CLAUDE.md                      # This file - Agent instructions
-├── README.md                      # Project overview
-└── PROJECT_STRUCTURE.md           # Detailed structure reference
+src/
+├── features/              # Feature-based modules
+│   ├── game/             # Core game logic & components
+│   ├── premium/          # Premium tier system
+│   ├── payment/          # Payment integrations
+│   ├── themes/           # Theme system
+│   ├── words/            # Word loading
+│   ├── stats/            # Statistics & export
+│   ├── landing/          # Landing page
+│   ├── settings/         # Game settings
+│   ├── ads/              # AdSense integration
+│   ├── customWords/      # Custom word packs
+│   └── featureFlags/     # Feature flag system
+├── shared/               # Shared components & utilities
+│   ├── components/       # Reusable UI components
+│   ├── hooks/            # Custom React hooks
+│   └── utils/            # Utility functions
+├── config/               # Configuration files
+└── test/                 # Test setup
+
+public/words/             # Word category JSON files
 ```
 
-### RULES - MUST BE FOLLOWED WITHOUT EXCEPTION:
+## Core Development Philosophy
 
-1. **ALL new work goes in `/Initiatives/` directory** - No exceptions
-2. **NEVER create files outside the defined structure**
-3. **ALWAYS use templates from `/_templates/` when creating new items**
-4. **Initiative → Project → PRP → PRD hierarchy is MANDATORY**
-5. **Linear integration data in `linear-integration.json` is source of truth**
-6. **Archive directory is READ-ONLY - never write there**
+### 1. Testing First
+- Write/update tests for ALL code changes
+- Use Vitest for unit tests
+- Use @testing-library/react for component tests
+- Target: 80%+ code coverage (configured in vitest.config.ts)
+- Run tests before committing: `npm test`
 
-### Current Active Initiatives (As of 2025-08-14):
+### 2. TypeScript Strict Mode
+- Strict type checking enabled (see tsconfig.json)
+- No `any` types without justification
+- Use Zod schemas for runtime validation
+- Keep type definitions close to implementation
 
-1. **SG Chat v1** - Multi-agent AI platform (2 projects)
-2. **StartGuides CRM** - CRM system (6 projects)
-3. **StartGuides PageForge** - Document platform (3 projects)
-4. **Hybrid Env Integration** - Planning stage (0 projects)
-5. **StartGuides MATrIX** - Planning stage (0 projects)
-6. **App Guides & Features** - Planning stage (0 projects)
-7. **SG Public Website** - Planning stage (0 projects)
-8. **Tech Infrastructure** - Planning stage (0 projects)
+### 3. Component Architecture
+- Feature-based organization (not technical)
+- Each feature exports via index.ts barrel files
+- Shared components live in `src/shared/`
+- Components should be small, focused, testable
 
-### File Naming Conventions:
+### 4. State Management
+- Use Zustand for global state
+- Each feature can have its own store
+- Persist critical state to localStorage
+- Keep stores focused and minimal
 
-- Initiatives: Use exact names from list above
-- Projects: Match Linear project names exactly
-- PRPs: `[feature-name]-prp.md` (lowercase, hyphenated)
-- PRDs: Always `PRD.md` in project root
+### 5. Styling Guidelines
+- Use Tailwind CSS utility classes
+- Custom theme defined in tailwind.config.js
+- Color palette: Ink, Palm, Jollof, Gold, Kente, Cream, Teal
+- Mobile-first responsive design
+- Use semantic color names from theme
 
-### Navigation:
+## Development Workflow
 
-- Start at `/Initiatives/_INDEX.md` for overview
-- Each initiative has `README.md` with status
-- Each project has `README.md` with next steps
-- Check `PROJECT_STRUCTURE.md` for detailed rules
+### Setup & Running
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+
+# Run tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Type check
+npm run type-check
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+### Code Quality
+```bash
+# Lint code
+npm run lint
+
+# Format code
+npm run format
+
+# Full check before commit
+npm run type-check && npm run lint && npm test
+```
+
+### Git Workflow
+1. Create feature branch from main
+2. Make changes with tests
+3. Run type-check, lint, and tests
+4. Commit with descriptive messages
+5. Push and create PR
+
+## Game Architecture
+
+### Game Flow (6 Phases)
+1. **LANDING** - Choose Free or Premium, view rules
+2. **LOBBY** - Setup players (2-10) & category
+3. **REVEAL** - Sequential word reveal (pass-the-phone)
+4. **DISCUSS** - Players describe word, imposter bluffs
+5. **VOTE** - Vote for suspected imposter
+6. **RESULTS** - Show winner, scores, next round option
+
+### Key Stores (Zustand)
+- `gameStore` - Game state, phase, players, rounds
+- `premiumStore` - Premium status, session management
+- `themeStore` - Theme selection and application
+- `statsStore` - Game statistics and history
+- `customWordsStore` - Custom word packs
+- `featureFlagsStore` - Feature toggles
+
+### Feature Gating
+- Free tier: 2-5 players, basic categories
+- Premium tier: 6-10 players, premium categories, themes
+- Use `<FeatureGate>` component or `usePremium()` hook
+- Premium unlocks for 24 hours after payment
+
+### Word Categories
+Located in `public/words/*.json`:
+- **Free**: animals, food, places, random, technology, travel
+- **Premium**: black-card, grown-folks, hip-hop-culture, inside-jokes, kid-topics, premium-culture, slang, trending-topics, tv-movies, wild-card
+
+## Testing Guidelines
+
+### What to Test
+- Component rendering and user interactions
+- State management logic
+- Utility functions and hooks
+- Feature gate behavior
+- Payment flow integration points
+- Game phase transitions
+
+### Testing Patterns
+```typescript
+// Component test example
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+
+describe('MyComponent', () => {
+  it('should render correctly', () => {
+    render(<MyComponent />);
+    expect(screen.getByText('Expected Text')).toBeInTheDocument();
+  });
+});
+
+// Store test example
+import { renderHook, act } from '@testing-library/react';
+import { useGameStore } from './gameStore';
+
+describe('gameStore', () => {
+  it('should update phase', () => {
+    const { result } = renderHook(() => useGameStore());
+    act(() => {
+      result.current.setPhase('REVEAL');
+    });
+    expect(result.current.phase).toBe('REVEAL');
+  });
+});
+```
+
+## Environment Variables
+
+See `.env.example` for all available variables:
+- **Payment**: Stripe, PayPal client IDs
+- **Ads**: AdSense client and slot IDs
+- **Feature Flags**: Enable/disable features
+- **Tier Limits**: Free/premium player limits
+- **Operator Mode**: free, paid, hybrid
+
+## Deployment
+
+### Netlify Configuration
+- Build command: `npm run build`
+- Publish directory: `dist`
+- See `netlify.toml` for headers and redirects
+- Environment variables set in Netlify dashboard
+
+### Pre-Deployment Checklist
+- [ ] TypeScript compilation passes
+- [ ] All tests pass
+- [ ] Build succeeds
+- [ ] Bundle size acceptable (<150KB gzipped)
+- [ ] Environment variables configured
+- [ ] Payment links updated for production
+
+### Post-Deployment Testing
+- [ ] Test on real mobile devices
+- [ ] Verify PWA installation
+- [ ] Test offline functionality
+- [ ] Verify payment flows (use sandbox first)
+- [ ] Test all word categories
+- [ ] Verify premium feature gating
+
+## Common Tasks
+
+### Adding a New Feature
+1. Create feature folder in `src/features/`
+2. Add components, hooks, types
+3. Add store if needed (Zustand)
+4. Export via index.ts
+5. Write tests for all logic
+6. Update this documentation if needed
+
+### Adding a New Word Category
+1. Create JSON file in `public/words/`
+2. Follow format: `{ "category": "Name", "words": [...] }`
+3. Update category selector in settings
+4. Mark as free or premium in config
+5. Test word loading
+
+### Adding a New Component
+1. Create in appropriate feature or shared
+2. Use TypeScript for props
+3. Style with Tailwind CSS
+4. Make mobile-responsive
+5. Write component tests
+6. Export via index.ts
+
+### Modifying Game Flow
+1. Update game phase in gameStore
+2. Update phase transition logic
+3. Update corresponding screen component
+4. Test phase transitions
+5. Update GAME_FLOW.md if major changes
+
+## Best Practices
+
+### Do's ✅
+- Use feature-based organization
+- Write tests for all new code
+- Use TypeScript strict mode
+- Follow mobile-first design
+- Use semantic component names
+- Keep components small and focused
+- Use Zustand for state management
+- Persist important state to localStorage
+- Use Zod schemas for validation
+- Follow existing code patterns
+
+### Don'ts ❌
+- Don't use `any` type
+- Don't skip writing tests
+- Don't create overly complex components
+- Don't bypass feature gates
+- Don't commit broken builds
+- Don't add unnecessary dependencies
+- Don't create technical-based folders at top level
+- Don't modify word files manually (use tools)
+
+## Troubleshooting
+
+### Build Issues
+- Clear node_modules and reinstall: `rm -rf node_modules && npm install`
+- Clear Vite cache: `rm -rf node_modules/.vite`
+- Check TypeScript errors: `npm run type-check`
+
+### Test Issues
+- Clear test cache: `npm test -- --clearCache`
+- Run single test: `npm test -- path/to/test.test.tsx`
+- Check test setup: `src/test/setup.ts`
+
+### Style Issues
+- Verify Tailwind config: `tailwind.config.js`
+- Check theme definitions in config
+- Use browser dev tools to inspect applied classes
+- Ensure PostCSS is processing correctly
+
+## Resources
+
+### Key Documentation Files
+- `GAME_FLOW.md` - Visual game flow diagram
+- `PRD-ImposterGame.md` - Original product requirements
+- `DEPLOYMENT_CHECKLIST.md` - Deployment guide
+- `.env.example` - Environment variable reference
+
+### External Resources
+- [React Documentation](https://react.dev)
+- [Vite Documentation](https://vitejs.dev)
+- [Vitest Documentation](https://vitest.dev)
+- [Zustand Documentation](https://zustand-demo.pmnd.rs)
+- [Tailwind CSS Documentation](https://tailwindcss.com)
+
+---
+
+**Remember**: This is a fun, cultural, social party game. Keep the code clean, the UX smooth, and the vibes immaculate. 🎮✨

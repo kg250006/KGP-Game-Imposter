@@ -24,19 +24,19 @@ describe('Button', () => {
     it('renders primary variant', () => {
       render(<Button variant="primary">Primary</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-jollof');
+      expect(button).toHaveClass('bg-primary');
     });
 
     it('renders secondary variant', () => {
       render(<Button variant="secondary">Secondary</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-gold');
+      expect(button).toHaveClass('bg-secondary');
     });
 
     it('renders danger variant', () => {
       render(<Button variant="danger">Danger</Button>);
       const button = screen.getByRole('button');
-      expect(button).toHaveClass('bg-kente');
+      expect(button).toHaveClass('bg-error');
     });
   });
 

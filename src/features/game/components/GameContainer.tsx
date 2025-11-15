@@ -3,7 +3,7 @@
  * @module features/game/components
  */
 
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { useGame } from '../hooks/useGame';
 import { GamePhase } from '../types/game.types';
 import { LandingPage } from '../../landing/components/LandingPage';
@@ -12,6 +12,8 @@ import { RevealScreen } from './RevealScreen';
 import { DiscussionScreen } from './DiscussionScreen';
 import { VotingScreen } from './VotingScreen';
 import { ResultsScreen } from './ResultsScreen';
+import { useGamePhaseTracking } from '@/shared/hooks';
+import { usePremium } from '../../premium/hooks/usePremium';
 
 /**
  * GameContainer Component
@@ -33,6 +35,15 @@ import { ResultsScreen } from './ResultsScreen';
  */
 export function GameContainer(): ReactElement {
   const { phase } = useGame();
+  const { isPremium } = usePremium();
+
+  // Track game phase changes in Google Analytics
+  useGamePhaseTracking(phase, isPremium);
+
+  // Scroll to top when phase changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [phase]);
 
   switch (phase) {
     case GamePhase.LANDING:

@@ -42,12 +42,12 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps): ReactElement {
         {/* Step 1 */}
         <div>
           <div className="flex items-center gap-3 mb-2">
-            <div className="bg-jollof text-cream w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+            <div className="bg-primary text-navyDark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
               1
             </div>
-            <h3 className="text-lg font-bold text-ink">Setup</h3>
+            <h3 className="text-lg font-bold text-textColor">Setup</h3>
           </div>
-          <p className="text-ink/80 text-sm pl-11">
+          <p className="text-textMuted text-sm pl-11">
             Choose the number of players (2-10) and select a category. Hit "Start Game" to begin!
           </p>
         </div>
@@ -55,12 +55,12 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps): ReactElement {
         {/* Step 2 */}
         <div>
           <div className="flex items-center gap-3 mb-2">
-            <div className="bg-jollof text-cream w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+            <div className="bg-primary text-navyDark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
               2
             </div>
-            <h3 className="text-lg font-bold text-ink">Reveal</h3>
+            <h3 className="text-lg font-bold text-textColor">Reveal</h3>
           </div>
-          <p className="text-ink/80 text-sm pl-11">
+          <p className="text-textMuted text-sm pl-11">
             Each player taps to reveal their secret word. <strong>One player will be the IMPOSTER</strong> and see "IMPOSTER" instead. Keep it secret!
           </p>
         </div>
@@ -68,12 +68,12 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps): ReactElement {
         {/* Step 3 */}
         <div>
           <div className="flex items-center gap-3 mb-2">
-            <div className="bg-jollof text-cream w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+            <div className="bg-primary text-navyDark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
               3
             </div>
-            <h3 className="text-lg font-bold text-ink">Discuss</h3>
+            <h3 className="text-lg font-bold text-textColor">Discuss</h3>
           </div>
-          <p className="text-ink/80 text-sm pl-11">
+          <p className="text-textMuted text-sm pl-11">
             Go around and describe the word <strong>without saying it</strong>. The imposter must blend in without knowing the word!
           </p>
         </div>
@@ -81,12 +81,12 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps): ReactElement {
         {/* Step 4 */}
         <div>
           <div className="flex items-center gap-3 mb-2">
-            <div className="bg-jollof text-cream w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+            <div className="bg-primary text-navyDark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
               4
             </div>
-            <h3 className="text-lg font-bold text-ink">Vote</h3>
+            <h3 className="text-lg font-bold text-textColor">Vote</h3>
           </div>
-          <p className="text-ink/80 text-sm pl-11">
+          <p className="text-textMuted text-sm pl-11">
             Everyone votes on who they think is the imposter. Choose wisely!
           </p>
         </div>
@@ -94,27 +94,27 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps): ReactElement {
         {/* Step 5 */}
         <div>
           <div className="flex items-center gap-3 mb-2">
-            <div className="bg-jollof text-cream w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
+            <div className="bg-primary text-navyDark w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">
               5
             </div>
-            <h3 className="text-lg font-bold text-ink">Results & Scoring</h3>
+            <h3 className="text-lg font-bold text-textColor">Results & Scoring</h3>
           </div>
-          <div className="text-ink/80 text-sm pl-11 space-y-3">
+          <div className="text-textMuted text-sm pl-11 space-y-3">
             <p className="font-semibold">The imposter is revealed! Here's how points work:</p>
 
             {/* Crew Scoring */}
-            <div className="bg-palm/10 rounded-lg p-3 space-y-2">
+            <div className="bg-success/10 rounded-md p-3 space-y-2">
               <div className="flex items-start gap-2">
-                <span className="text-palm font-bold text-lg">👥</span>
+                <span className="text-success font-bold text-lg">👥</span>
                 <div className="flex-1">
-                  <p className="font-bold text-palm">Crew Members</p>
+                  <p className="font-bold text-success">Crew Members</p>
                   <p className="text-xs mt-1">
                     <strong>+1 point</strong> if you voted for the imposter (correct vote)
                   </p>
                   <p className="text-xs">
                     <strong>0 points</strong> if you voted for a crew member (wrong vote)
                   </p>
-                  <p className="text-xs italic mt-2 text-ink/60">
+                  <p className="text-xs italic mt-2 text-textMuted">
                     💡 Your individual vote matters! You earn points even if the crew loses.
                   </p>
                 </div>
@@ -122,23 +122,23 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps): ReactElement {
             </div>
 
             {/* Imposter Scoring */}
-            <div className="bg-jollof/10 rounded-lg p-3 space-y-2">
+            <div className="bg-error/10 rounded-md p-3 space-y-2">
               <div className="flex items-start gap-2">
-                <span className="text-jollof font-bold text-lg">🕵️</span>
+                <span className="text-error font-bold text-lg">🕵️</span>
                 <div className="flex-1">
-                  <p className="font-bold text-jollof">Imposter</p>
+                  <p className="font-bold text-error">Imposter</p>
                   <div className="space-y-1 mt-1">
                     <p className="text-xs">
-                      <strong className="text-jollof">+3 points</strong> - Perfect Deception! (Nobody voted for you)
+                      <strong className="text-error">+3 points</strong> - Perfect Deception! (Nobody voted for you)
                     </p>
                     <p className="text-xs">
-                      <strong className="text-jollof">+2 points</strong> - Good Job! (Fooled at least half the crew)
+                      <strong className="text-error">+2 points</strong> - Good Job! (Fooled at least half the crew)
                     </p>
                     <p className="text-xs">
-                      <strong className="text-jollof">0 points</strong> - Busted! (More than half voted for you)
+                      <strong className="text-error">0 points</strong> - Busted! (More than half voted for you)
                     </p>
                   </div>
-                  <p className="text-xs italic mt-2 text-ink/60">
+                  <p className="text-xs italic mt-2 text-textMuted">
                     💡 The better you blend in, the more points you earn!
                   </p>
                 </div>
@@ -146,7 +146,7 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps): ReactElement {
             </div>
 
             {/* Example */}
-            <div className="bg-tealA/10 rounded-lg p-3 border border-tealA/20">
+            <div className="bg-secondary/10 rounded-md p-3 border border-secondary/20">
               <p className="text-xs font-bold mb-2">📊 Example with 5 players:</p>
               <div className="space-y-1 text-xs">
                 <p>• Player 3 is the imposter</p>
@@ -163,9 +163,9 @@ export function RulesModal({ isOpen, onClose }: RulesModalProps): ReactElement {
         </div>
 
         {/* Pro Tips */}
-        <div className="bg-palm/10 rounded-lg p-4 mt-6">
-          <h4 className="font-bold text-ink mb-2 text-sm">Pro Tips:</h4>
-          <ul className="text-ink/70 text-xs space-y-1 list-disc list-inside">
+        <div className="bg-success/10 rounded-md p-4 mt-6">
+          <h4 className="font-bold text-textColor mb-2 text-sm">Pro Tips:</h4>
+          <ul className="text-textMuted text-xs space-y-1 list-disc list-inside">
             <li>The imposter should listen carefully and try to fit in</li>
             <li>Ask suspicious players follow-up questions</li>
             <li>Be creative with your descriptions!</li>

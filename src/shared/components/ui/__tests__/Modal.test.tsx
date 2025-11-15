@@ -83,7 +83,7 @@ describe('Modal', () => {
       );
 
       // Click on backdrop (find the backdrop div specifically)
-      const backdrop = container.querySelector('.bg-black\\/50');
+      const backdrop = container.querySelector('.bg-black\\/60');
       expect(backdrop).toBeInTheDocument();
 
       if (backdrop) {
