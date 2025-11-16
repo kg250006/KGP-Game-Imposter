@@ -12,6 +12,7 @@ import { Confetti } from '@/shared/components/animations/Confetti';
 import { PremiumUpsellModal } from '../../premium/components/PremiumUpsellModal';
 import { PaymentModal } from '../../payment/components/PaymentModal';
 import { cn } from '@/shared/utils';
+import { HiddenEasterEggButton, SecretCodeModal } from '@/features/secretCodes';
 
 /**
  * ResultsScreen Component
@@ -43,6 +44,7 @@ export function ResultsScreen(): ReactElement {
   const [showUpsell, setShowUpsell] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [showSecretCodeModal, setShowSecretCodeModal] = useState(false);
 
   const imposterPlayer = players.find(p => p.isImposter);
   const crewWon = currentRound?.crewWon || false;
@@ -71,7 +73,11 @@ export function ResultsScreen(): ReactElement {
     <div className="min-h-screen p-4">
       <div className="max-w-4xl mx-auto">
         {/* Imposter Reveal */}
-        <Card variant="elevated" className="text-center mb-8 py-8 bg-gradient-to-r from-primary/10 to-secondary/10">
+        <Card variant="elevated" className="relative text-center mb-8 py-8 bg-gradient-to-r from-primary/10 to-secondary/10">
+          <HiddenEasterEggButton
+            onActivate={() => setShowSecretCodeModal(true)}
+            className="right-4 top-4"
+          />
           <p className="text-lg font-semibold text-textMuted uppercase mb-2">
             {imposterPlayer?.name || `Player ${imposterPlayerNumber}`} was the
           </p>
@@ -185,6 +191,12 @@ export function ResultsScreen(): ReactElement {
       <PaymentModal
         isOpen={showPayment}
         onClose={() => setShowPayment(false)}
+      />
+
+      {/* Secret Code Modal */}
+      <SecretCodeModal
+        isOpen={showSecretCodeModal}
+        onClose={() => setShowSecretCodeModal(false)}
       />
     </div>
   );

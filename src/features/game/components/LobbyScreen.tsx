@@ -19,6 +19,7 @@ import { useStatsStore } from '../../stats/store/statsStore';
 import { PLAYER_COUNT_CONFIG, getPlayerCountText } from '@/config/playerCounts';
 import { cn, trackImposterHintsToggled, trackPlayerCountChanged } from '@/shared/utils';
 import { PlayerNameEditor } from './PlayerNameEditor';
+import { HiddenEasterEggButton, SecretCodeModal } from '@/features/secretCodes';
 
 /**
  * LobbyScreen Component
@@ -53,6 +54,7 @@ export function LobbyScreen(): ReactElement {
   const [showStatsModal, setShowStatsModal] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [showNameEditor, setShowNameEditor] = useState(false);
+  const [showSecretCodeModal, setShowSecretCodeModal] = useState(false);
 
   const handlePlayerCountChange = (delta: number) => {
     const oldCount = settings.playerCount;
@@ -152,6 +154,12 @@ export function LobbyScreen(): ReactElement {
             <h1 className="text-3xl md:text-4xl font-extrabold text-primary drop-shadow-sm">
               New Round
             </h1>
+
+            {/* Hidden Easter Egg Button */}
+            <HiddenEasterEggButton
+              onActivate={() => setShowSecretCodeModal(true)}
+              className="right-0 top-0"
+            />
           </div>
 
           {/* Player Count */}
@@ -519,6 +527,12 @@ export function LobbyScreen(): ReactElement {
           </div>
         </div>
       </Modal>
+
+      {/* Secret Code Modal */}
+      <SecretCodeModal
+        isOpen={showSecretCodeModal}
+        onClose={() => setShowSecretCodeModal(false)}
+      />
     </div>
   );
 }

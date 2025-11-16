@@ -10,6 +10,7 @@ export enum PaymentMethod {
   STRIPE = 'stripe',
   PAYPAL = 'paypal',
   APPLE_PAY = 'apple_pay',
+  SECRET_CODE = 'secret_code',
 }
 
 /**
