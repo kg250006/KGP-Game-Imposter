@@ -40,17 +40,28 @@ export function LandingPage(): ReactElement {
   };
 
   return (
-    <div className="min-h-screen flex items-end justify-center p-4 pb-12">
-      <div className="max-w-md w-full text-center">
+    <div className="h-screen flex items-end p-4 pb-[40vh]">
+      <div className="max-w-md w-full mx-auto text-center space-y-4">
         {/* Single Start Free Button */}
         <Button
           variant="primary"
           size="lg"
           onClick={handleStartFree}
-          className="text-2xl md:text-3xl px-16 py-8 w-full shadow-2xl shadow-primary/50 hover:shadow-primary/70 transition-all duration-300 font-extrabold border-2 border-primary/30"
+          className="text-xl md:text-3xl px-12 py-6 md:px-16 md:py-8 w-full shadow-2xl shadow-primary/50 hover:shadow-primary/70 transition-all duration-300 font-extrabold border-2 border-primary/30"
           aria-label="Start free game"
         >
           Start Free
+        </Button>
+
+        {/* Game Rules Button */}
+        <Button
+          variant="secondary"
+          size="md"
+          onClick={() => setShowRules(true)}
+          className="w-full"
+          aria-label="View game rules"
+        >
+          How to Play
         </Button>
       </div>
 
