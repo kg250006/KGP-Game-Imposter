@@ -10,7 +10,17 @@
 - [x] Word categories validated (9 files, 225 words)
 - [x] Environment template created (.env.example)
 
-## Netlify Configuration
+## KGP Host (imposter.sitepage.app)
+
+- [ ] `npm run type-check` and `npm run build` pass
+- [ ] `.env.production` holds the production `VITE_*` values (public only, no secrets)
+- [ ] `kgp status --json --yes` shows the expected live release
+- [ ] `kgp deploy --json --yes` creates a draft; note the `deploy_id`
+- [ ] Publish: `kgp releases publish DEPLOY_ID --json --yes`
+- [ ] Check https://imposter.sitepage.app/: 200, `X-KGP-Release` matches, `/lobby` deep link loads, `/words/*.json` load
+- [ ] If anything is wrong: `kgp rollback --json --yes`
+
+## Netlify Configuration (legacy, theimpostergame.online)
 
 ### Build Settings
 - **Build command**: `npm run build`

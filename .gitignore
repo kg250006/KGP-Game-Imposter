@@ -25,7 +25,6 @@ dist-ssr
 
 # Environment files
 .env.development
-.env.production
 .env.local
 
 # Test coverage
@@ -34,3 +33,7 @@ coverage
 
 # Build
 build
+
+# KGP Host local/server env (never commit)
+.env.kgp-dev
+.env.server

@@ -4,13 +4,13 @@ This file provides guidance to Claude Code when working on The Imposter Game.
 
 ## Project Overview
 
-**The Imposter Game** is a mobile-first social party game web app where players take turns revealing secret words, discuss them, and vote to identify the imposter. Built with React 18, TypeScript, and Tailwind CSS, deployed as a static PWA on Netlify.
+**The Imposter Game** is a mobile-first social party game web app where players take turns revealing secret words, discuss them, and vote to identify the imposter. Built with React 18, TypeScript, and Tailwind CSS, deployed as a static PWA on KGP Host (https://imposter.sitepage.app).
 
 ### Tech Stack
 - **Frontend**: React 18, TypeScript, Vite, Tailwind CSS
 - **State Management**: Zustand (multiple stores)
 - **Testing**: Vitest + @testing-library/react
-- **Deployment**: Netlify (static hosting)
+- **Deployment**: KGP Host (static hosting, site `imposter`)
 - **PWA**: vite-plugin-pwa (offline support)
 - **Payments**: Stripe, PayPal, Apple Pay
 - **Styling**: Tailwind CSS with custom Neo-Afro Modern theme
@@ -197,11 +197,18 @@ See `.env.example` for all available variables:
 
 ## Deployment
 
-### Netlify Configuration
-- Build command: `npm run build`
-- Publish directory: `dist`
-- See `netlify.toml` for headers and redirects
-- Environment variables set in Netlify dashboard
+### KGP Host (imposter.sitepage.app)
+- Config: `kgp.toml` (site `imposter`, SPA mode, security headers). Per-path headers: `public/_headers`.
+- Build values: committed `.env.production` (public `VITE_*` only, they ship in the bundle). Never put secrets there.
+- Draft release: `kgp deploy --json --yes` (builds and uploads; note the `deploy_id`)
+- Publish (only when intended): `kgp releases publish DEPLOY_ID --json --yes`
+- Roll back: `kgp rollback --json --yes`
+- Status: `kgp status --json --yes`
+- Local check of the build: `kgp dev` (port 8888)
+- KGP Host caches `/assets/` for a year and revalidates everything else; don't add Cache-Control overrides.
+
+### Netlify (legacy)
+- `netlify.toml` is kept while theimpostergame.online is still served by Netlify. Retire it once the domain moves.
 
 ### Pre-Deployment Checklist
 - [ ] TypeScript compilation passes
