@@ -140,7 +140,7 @@ The game is hosted at https://imposter.sitepage.app. Settings live in `kgp.toml`
    kgp rollback --json --yes
    ```
 
-`netlify.toml` is kept while theimpostergame.online is still served by Netlify.
+The old domain, theimpostergame.online, redirects here from Netlify (see `netlify-redirect/`).
 
 See [DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md) for detailed deployment guide.
 

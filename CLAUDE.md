@@ -208,7 +208,7 @@ See `.env.example` for all available variables:
 - KGP Host caches `/assets/` for a year and revalidates everything else; don't add Cache-Control overrides.
 
 ### Netlify (legacy)
-- `netlify.toml` is kept while theimpostergame.online is still served by Netlify. Retire it once the domain moves.
+- theimpostergame.online stays on Netlify only as a 301 redirect to imposter.sitepage.app. Its deploy is `netlify-redirect/` (see its README). `netlify.toml` is no longer used for the app.
 
 ### Pre-Deployment Checklist
 - [ ] TypeScript compilation passes

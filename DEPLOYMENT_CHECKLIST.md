@@ -20,7 +20,9 @@
 - [ ] Check https://imposter.sitepage.app/: 200, `X-KGP-Release` matches, `/lobby` deep link loads, `/words/*.json` load
 - [ ] If anything is wrong: `kgp rollback --json --yes`
 
-## Netlify Configuration (legacy, theimpostergame.online)
+## Netlify Configuration (legacy)
+
+theimpostergame.online now only redirects to imposter.sitepage.app. Its Netlify deploy is `netlify-redirect/`; the settings below are kept for reference.
 
 ### Build Settings
 - **Build command**: `npm run build`

@@ -1,0 +1,4 @@
+# theimpostergame.online -> KGP Host. Paths and query strings carry over.
+# /sw.js is served (not redirected) so old installs unregister their service worker.
+/sw.js  /sw.js  200
+/*      https://imposter.sitepage.app/:splat  301!

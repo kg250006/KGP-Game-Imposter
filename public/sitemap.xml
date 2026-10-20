@@ -5,12 +5,12 @@
 
   <!-- Homepage / Main Game Interface -->
   <url>
-    <loc>https://theimpostergame.online/</loc>
+    <loc>https://imposter.sitepage.app/</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://theimpostergame.online/og-image.png</image:loc>
+      <image:loc>https://imposter.sitepage.app/og-image.png</image:loc>
       <image:title>The Imposter Game - Social Party Game</image:title>
       <image:caption>Play The Imposter Game with friends - Ultimate social deduction party game</image:caption>
     </image:image>
@@ -18,7 +18,7 @@
 
   <!-- Terms of Service -->
   <url>
-    <loc>https://theimpostergame.online/terms.html</loc>
+    <loc>https://imposter.sitepage.app/terms.html</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
@@ -26,7 +26,7 @@
 
   <!-- Privacy Policy -->
   <url>
-    <loc>https://theimpostergame.online/privacy.html</loc>
+    <loc>https://imposter.sitepage.app/privacy.html</loc>
     <lastmod>2025-01-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
