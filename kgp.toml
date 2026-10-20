@@ -1,0 +1,17 @@
+# KGP Host project settings. No secrets here (tokens live in the keychain or env vars).
+# Imported from netlify.toml by kgp migrate netlify.
+site = "imposter"
+spa = true
+
+[build]
+command = "npm run build"
+publish = "dist"
+
+[headers]
+X-Frame-Options = "DENY"
+X-Content-Type-Options = "nosniff"
+X-XSS-Protection = "1; mode=block"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+X-Robots-Tag = "index, follow"
+

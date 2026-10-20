@@ -75,7 +75,7 @@ npm run format       # Format code with Prettier
 - **Styling**: Tailwind CSS
 - **State Management**: Zustand
 - **Testing**: Vitest + Testing Library
-- **Deployment**: Netlify (Static PWA)
+- **Deployment**: KGP Host (Static PWA)
 - **Payments**: Stripe, PayPal, Apple Pay
 
 ## 📁 Project Structure
@@ -121,21 +121,26 @@ Target coverage: 80%+ (lines, functions, branches, statements)
 
 ## 🚢 Deployment
 
-### Deploy to Netlify
+### Deploy to KGP Host
 
-1. Build the project:
+The game is hosted at https://imposter.sitepage.app. Settings live in `kgp.toml`; production build values live in `.env.production`.
+
+1. Create a draft release (builds and uploads):
    ```bash
-   npm run build
+   kgp deploy --json --yes
    ```
 
-2. Configure environment variables in Netlify dashboard (see `.env.example`)
+2. Publish it when ready:
+   ```bash
+   kgp releases publish DEPLOY_ID --json --yes
+   ```
 
-3. Set build settings:
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-   - Node version: 18.x
+3. Roll back if needed:
+   ```bash
+   kgp rollback --json --yes
+   ```
 
-4. Deploy!
+The old domain, theimpostergame.online, redirects here from Netlify (see `netlify-redirect/`).
 
 See [DEPLOYMENT_CHECKLIST.md](./DEPLOYMENT_CHECKLIST.md) for detailed deployment guide.
 
